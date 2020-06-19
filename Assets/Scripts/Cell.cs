@@ -6,6 +6,7 @@ public class Cell : MonoBehaviour
 {
     public bool hasBeenVisited, hasNorthWall, hasSouthWall, hasEastWall, hasWestWall;
 
+    [SerializeField]
     float posX, posY;
 
     public GameObject floorPrefab, wallPrefab, wallLitPrefab;
@@ -42,31 +43,57 @@ public class Cell : MonoBehaviour
 
         if (hasNorthWall && northWall == null)
         {
-            GameObject obj = Instantiate(wallPrefab, this.transform);
-            obj.transform.position = new Vector3(posX, 0, posY + 2.5f);
+            GameObject obj;
+            
+            if (Random.value < 0.9f)
+                obj = Instantiate(wallPrefab, this.transform);
+            else
+                obj = Instantiate(wallLitPrefab, this.transform);
+
+            obj.transform.position = new Vector3(posX, 1.5f, posY + 2.5f);
             obj.name = "North Wall";
+            obj.transform.localEulerAngles = new Vector3(0, 90, 0);
         }
 
         if(hasSouthWall && southWall == null)
         {
-            GameObject obj = Instantiate(wallPrefab, this.transform);
-            obj.transform.position = new Vector3(posX, 0, posY - 2.5f);
+            GameObject obj;
+
+            if (Random.value < 0.9f)
+                obj = Instantiate(wallPrefab, this.transform);
+            else
+                obj = Instantiate(wallLitPrefab, this.transform);
+
+            obj.transform.position = new Vector3(posX, 1.5f, posY - 2.5f);
+            obj.transform.localEulerAngles = new Vector3(0, -90, 0);
             obj.name = "South Wall";
         }
 
         if (hasEastWall && eastWall == null)
         {
-            GameObject obj = Instantiate(wallPrefab, this.transform);
-            obj.transform.position = new Vector3(posX + 2.5f, 0, posY);
-            obj.transform.localRotation = new Quaternion(0, 90, 0, 0);
+            GameObject obj;
+
+            if (Random.value < 0.9f)
+                obj = Instantiate(wallPrefab, this.transform);
+            else
+                obj = Instantiate(wallLitPrefab, this.transform);
+
+            obj.transform.position = new Vector3(posX + 2.5f, 1.5f, posY);
+            obj.transform.localEulerAngles = new Vector3(0, 180, 0);
             obj.name = "East Wall";
         }
 
         if (hasWestWall && westWall == null)
         {
-            GameObject obj = Instantiate(wallPrefab, this.transform);
-            obj.transform.position = new Vector3(posX - 2.5f, 0, posY);
-            obj.transform.localRotation = new Quaternion(0, 90, 0, 0);
+            GameObject obj;
+
+            if (Random.value < 0.9f)
+                obj = Instantiate(wallPrefab, this.transform);
+            else
+                obj = Instantiate(wallLitPrefab, this.transform);
+
+            obj.transform.position = new Vector3(posX - 2.5f, 1.5f, posY);
+            obj.transform.localEulerAngles = new Vector3(0, 0, 0);
             obj.name = "West Wall";
         }
     }

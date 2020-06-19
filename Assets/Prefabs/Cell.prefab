@@ -48,9 +48,11 @@ MonoBehaviour:
   hasSouthWall: 1
   hasEastWall: 1
   hasWestWall: 1
+  posX: 0
+  posY: 0
   floorPrefab: {fileID: 5720154184785467483, guid: 75bb3d7854e21d341bd8143626225282,
     type: 3}
   wallPrefab: {fileID: 8557633593681701422, guid: 757211b966746c646a7eafb91a320c4e,
     type: 3}
-  wallLitPrefab: {fileID: 8557633593681701422, guid: 757211b966746c646a7eafb91a320c4e,
+  wallLitPrefab: {fileID: 1018960807378691496, guid: 2c9b79f3e3e981045a442e56ccff8ab2,
     type: 3}
