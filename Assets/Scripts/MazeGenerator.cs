@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class MazeGenerator : MonoBehaviour
 {
+    public NavMeshSurface navMesh;
     int rowCount, colCount;
 
     Cell[,] cells;
@@ -49,7 +51,9 @@ public class MazeGenerator : MonoBehaviour
 
         HuntAndKill();
         RenderMaze();
+        navMesh.BuildNavMesh();
     }
+     
     public void RenderMaze()
     {
         for (int i = 0; i < rowCount; i++)
