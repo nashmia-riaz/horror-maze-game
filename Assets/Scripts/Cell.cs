@@ -7,7 +7,7 @@ public class Cell : MonoBehaviour
     public bool hasBeenVisited, hasNorthWall, hasSouthWall, hasEastWall, hasWestWall;
 
     [SerializeField]
-    float posX, posY;
+    public float posX, posY;
 
     public GameObject floorPrefab, wallPrefab, wallLitPrefab;
 
@@ -45,10 +45,10 @@ public class Cell : MonoBehaviour
         {
             GameObject obj;
             
-            if (Random.value < 0.9f)
+            //if (Random.value < 0.9f)
                 obj = Instantiate(wallPrefab, this.transform);
-            else
-                obj = Instantiate(wallLitPrefab, this.transform);
+            //else
+            //    obj = Instantiate(wallLitPrefab, this.transform);
 
             obj.transform.position = new Vector3(posX, 1.5f, posY + 2.5f);
             obj.name = "North Wall";
@@ -59,10 +59,10 @@ public class Cell : MonoBehaviour
         {
             GameObject obj;
 
-            if (Random.value < 0.9f)
+            //if (Random.value < 0.9f)
                 obj = Instantiate(wallPrefab, this.transform);
-            else
-                obj = Instantiate(wallLitPrefab, this.transform);
+            //else
+            //    obj = Instantiate(wallLitPrefab, this.transform);
 
             obj.transform.position = new Vector3(posX, 1.5f, posY - 2.5f);
             obj.transform.localEulerAngles = new Vector3(0, -90, 0);
@@ -73,10 +73,10 @@ public class Cell : MonoBehaviour
         {
             GameObject obj;
 
-            if (Random.value < 0.9f)
+            //if (Random.value < 0.9f)
                 obj = Instantiate(wallPrefab, this.transform);
-            else
-                obj = Instantiate(wallLitPrefab, this.transform);
+            //else
+            //    obj = Instantiate(wallLitPrefab, this.transform);
 
             obj.transform.position = new Vector3(posX + 2.5f, 1.5f, posY);
             obj.transform.localEulerAngles = new Vector3(0, 180, 0);
@@ -87,10 +87,10 @@ public class Cell : MonoBehaviour
         {
             GameObject obj;
 
-            if (Random.value < 0.9f)
+            //if (Random.value < 0.9f)
                 obj = Instantiate(wallPrefab, this.transform);
-            else
-                obj = Instantiate(wallLitPrefab, this.transform);
+            //else
+            //    obj = Instantiate(wallLitPrefab, this.transform);
 
             obj.transform.position = new Vector3(posX - 2.5f, 1.5f, posY);
             obj.transform.localEulerAngles = new Vector3(0, 0, 0);

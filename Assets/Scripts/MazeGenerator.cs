@@ -9,7 +9,7 @@ public class MazeGenerator : MonoBehaviour
     public NavMeshSurface navMesh;
     int rowCount, colCount;
 
-    Cell[,] cells;
+    public Cell[,] cells;
     GameObject[,] cellObjects;
     public GameObject cellPrefab;
 
@@ -18,6 +18,8 @@ public class MazeGenerator : MonoBehaviour
     bool courseComplete;
 
     int cellSize = 5;
+
+    public GameController gameController;
 
     // Start is called before the first frame update
     void Start()
@@ -52,6 +54,7 @@ public class MazeGenerator : MonoBehaviour
         HuntAndKill();
         RenderMaze();
         navMesh.BuildNavMesh();
+        gameController.Initialize(cells[0, 0].transform.position + new Vector3(0, 1.5f, 0));
     }
      
     public void RenderMaze()
@@ -74,7 +77,6 @@ public class MazeGenerator : MonoBehaviour
             Kill();
             Hunt();
         }
-        //RenderMaze();
     }
 
     #region hunt
