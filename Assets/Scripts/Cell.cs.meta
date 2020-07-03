@@ -10,6 +10,8 @@ MonoImporter:
       type: 3}
   - wallLitPrefab: {fileID: 8557633593681701422, guid: 757211b966746c646a7eafb91a320c4e,
       type: 3}
+  - ceilingPrefab: {fileID: 8222429474061044535, guid: e9e8627d53891d248bccc654a91db8ae,
+      type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -56,3 +56,5 @@ MonoBehaviour:
     type: 3}
   wallLitPrefab: {fileID: 1018960807378691496, guid: 2c9b79f3e3e981045a442e56ccff8ab2,
     type: 3}
+  ceilingPrefab: {fileID: 8222429474061044535, guid: e9e8627d53891d248bccc654a91db8ae,
+    type: 3}

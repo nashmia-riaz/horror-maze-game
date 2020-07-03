@@ -9,7 +9,7 @@ public class Cell : MonoBehaviour
     [SerializeField]
     public float posX, posY;
 
-    public GameObject floorPrefab, wallPrefab, wallLitPrefab;
+    public GameObject floorPrefab, wallPrefab, wallLitPrefab, ceilingPrefab;
 
     // Start is called before the first frame update
     void Awake()
@@ -40,6 +40,9 @@ public class Cell : MonoBehaviour
 
         GameObject floor = Instantiate(floorPrefab, this.transform);
         floor.transform.position = new Vector3(posX, 0, posY);
+
+        GameObject ceiling = Instantiate(ceilingPrefab, this.transform);
+        ceiling.transform.position = new Vector3(posX, 5f, posY);
 
         if (hasNorthWall && northWall == null)
         {
