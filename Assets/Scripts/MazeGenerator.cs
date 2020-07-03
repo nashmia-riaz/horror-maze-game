@@ -17,7 +17,7 @@ public class MazeGenerator : MonoBehaviour
 
     bool courseComplete;
 
-    int cellSize = 5;
+    public int mazeSize = 6;
 
     public GameController gameController;
 
@@ -26,7 +26,7 @@ public class MazeGenerator : MonoBehaviour
     {
         courseComplete = false;
         currentCol = currentRow = 0;
-        rowCount = colCount = 5;
+        rowCount = colCount = mazeSize;
 
         cellObjects = new GameObject[rowCount, colCount];
         cells = new Cell[rowCount, colCount];
@@ -39,7 +39,7 @@ public class MazeGenerator : MonoBehaviour
                 cells[i, j] = cellObjects[i, j].GetComponent<Cell>();
                 cellObjects[i, j].name = "Cell (" + i + ", " + j + ")";
 
-                cells[i, j].SetPosition(i * cellSize, j * cellSize);
+                cells[i, j].SetPosition(i * mazeSize, j * mazeSize);
                 cells[i, j].hasWestWall = false;
                 cells[i, j].hasNorthWall = false;
 
@@ -71,7 +71,6 @@ public class MazeGenerator : MonoBehaviour
     }
     public void HuntAndKill()
     {
-        Debug.Break();
         while (!courseComplete)
         {
             Kill();
@@ -162,7 +161,6 @@ public class MazeGenerator : MonoBehaviour
     #region kill
     public void Kill()
     {
-        Debug.Break();
         while (RouteStillAvailable(currentRow, currentCol))
         {
             int direction = Random.Range(1, 4);

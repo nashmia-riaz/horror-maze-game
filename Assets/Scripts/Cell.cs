@@ -11,6 +11,8 @@ public class Cell : MonoBehaviour
 
     public GameObject floorPrefab, wallPrefab, wallLitPrefab, ceilingPrefab;
 
+    public float tileSize = 5f;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -42,7 +44,7 @@ public class Cell : MonoBehaviour
         floor.transform.position = new Vector3(posX, 0, posY);
 
         GameObject ceiling = Instantiate(ceilingPrefab, this.transform);
-        ceiling.transform.position = new Vector3(posX, 5f, posY);
+        ceiling.transform.position = new Vector3(posX, tileSize, posY);
 
         if (hasNorthWall && northWall == null)
         {
@@ -53,7 +55,7 @@ public class Cell : MonoBehaviour
             //else
             //    obj = Instantiate(wallLitPrefab, this.transform);
 
-            obj.transform.position = new Vector3(posX, 1.5f, posY + 2.5f);
+            obj.transform.position = new Vector3(posX, 1.5f, posY + tileSize/2f);
             obj.name = "North Wall";
             obj.transform.localEulerAngles = new Vector3(0, 90, 0);
         }
@@ -67,7 +69,7 @@ public class Cell : MonoBehaviour
             //else
             //    obj = Instantiate(wallLitPrefab, this.transform);
 
-            obj.transform.position = new Vector3(posX, 1.5f, posY - 2.5f);
+            obj.transform.position = new Vector3(posX, 1.5f, posY - tileSize/2f);
             obj.transform.localEulerAngles = new Vector3(0, -90, 0);
             obj.name = "South Wall";
         }
@@ -81,7 +83,7 @@ public class Cell : MonoBehaviour
             //else
             //    obj = Instantiate(wallLitPrefab, this.transform);
 
-            obj.transform.position = new Vector3(posX + 2.5f, 1.5f, posY);
+            obj.transform.position = new Vector3(posX + tileSize/2f, 1.5f, posY);
             obj.transform.localEulerAngles = new Vector3(0, 180, 0);
             obj.name = "East Wall";
         }
@@ -95,7 +97,7 @@ public class Cell : MonoBehaviour
             //else
             //    obj = Instantiate(wallLitPrefab, this.transform);
 
-            obj.transform.position = new Vector3(posX - 2.5f, 1.5f, posY);
+            obj.transform.position = new Vector3(posX - tileSize/2f, 1.5f, posY);
             obj.transform.localEulerAngles = new Vector3(0, 0, 0);
             obj.name = "West Wall";
         }
