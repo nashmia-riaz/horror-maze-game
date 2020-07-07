@@ -2,28 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MinimapCamController : MonoBehaviour
+namespace Perdita
 {
-
-    public Transform player;
-
-    // Start is called before the first frame update
-    void Start()
+    public class MinimapCamController : MonoBehaviour
     {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+        public Transform player;
 
-    private void LateUpdate()
-    {
-        Vector3 newPosition = player.position;
-        newPosition.y = 100;
-        transform.position = newPosition;
-        transform.rotation = Quaternion.Euler(90f, player.eulerAngles.y, 0f);
+        // Start is called before the first frame update
+        void Start()
+        {
+
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+
+        }
+
+        private void LateUpdate()
+        {
+            Vector3 newPosition = player.position;
+            newPosition.y = 100;
+            transform.position = newPosition;
+            transform.rotation = Quaternion.Euler(90f, player.eulerAngles.y, 0f);
+        }
     }
 }

@@ -3,28 +3,37 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AIController : MonoBehaviour
+namespace Perdita
 {
-    public Camera cam;
-    public NavMeshAgent agent;
-
-    // Start is called before the first frame update
-    void Start()
+    public class AIController : MonoBehaviour
     {
-        agent = gameObject.GetComponent<NavMeshAgent>();
-    }
+        public Camera cam;
+        public NavMeshAgent agent;
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
+        // Start is called before the first frame update
+        void Start()
         {
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
+            agent = gameObject.GetComponent<NavMeshAgent>();
+        }
 
-            if(Physics.Raycast(ray, out hit)){
-                agent.SetDestination(hit.point);
+        // Update is called once per frame
+        void Update()
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit))
+                {
+                    agent.SetDestination(hit.point);
+                }
             }
+        }
+
+        public void MoveTo(Vector3 point)
+        {
+            agent.SetDestination(point);
         }
     }
 }
