@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,6 +26,9 @@ namespace Perdita
 
         bool isBatteryOn;
 
+
+        SoundEffectsManager soundEffectsSource;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -34,6 +38,8 @@ namespace Perdita
                 instance = this;
             else
                 Destroy(this.gameObject);
+
+            soundEffectsSource = GameObject.FindGameObjectWithTag("Sound Effects Source").GetComponent<SoundEffectsManager>();
         }
 
         public void Initialize(Vector3 startPoint)
@@ -64,6 +70,7 @@ namespace Perdita
             {
                 isBatteryOn = !isBatteryOn;
                 flashLight.SetActive(isBatteryOn);
+                soundEffectsSource.PlaySound("Flashlight Click");
             }
             else if (Input.GetMouseButtonDown(1))
             {
@@ -89,5 +96,6 @@ namespace Perdita
             Debug.Log("Moving AI to " + pos);
             AI.MoveTo(pos);
         }
+
     }
 }
