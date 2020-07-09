@@ -10,6 +10,8 @@ namespace Perdita
         public Camera cam;
         public NavMeshAgent agent;
 
+        bool isCollidingWithPlayer = false;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -31,8 +33,25 @@ namespace Perdita
             }
         }
 
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.tag == "Player" && !isCollidingWithPlayer)
+            {
+                agent.SetDestination(transform.position);
+                isCollidingWithPlayer = true;
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.gameObject.tag == "Player" && isCollidingWithPlayer)
+                isCollidingWithPlayer = false;
+        }
+
         public void MoveTo(Vector3 point)
         {
+            if (isCollidingWithPlayer) return;
+            Debug.Log("Moving AI to " + point);
             agent.SetDestination(point);
         }
     }

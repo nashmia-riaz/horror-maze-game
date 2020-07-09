@@ -93,7 +93,6 @@ namespace Perdita
 
         public void PlayerCollidedWithFloor(Vector3 pos)
         {
-            Debug.Log("Moving AI to " + pos);
             AI.MoveTo(pos);
         }
 
