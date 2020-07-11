@@ -26,8 +26,9 @@ namespace Perdita
 
         bool isBatteryOn;
 
-
         SoundEffectsManager soundEffectsSource;
+
+        public GameObject rockPrefab;
 
         // Start is called before the first frame update
         void Start()
@@ -52,7 +53,7 @@ namespace Perdita
             mapCamera.GetComponent<Camera>().orthographicSize = size * 2 + 5;
         }
 
-        void ChargeBattery(float charge)
+        public void ChargeBattery(float charge)
         {
             batteryPower += charge;
 
@@ -60,23 +61,30 @@ namespace Perdita
                 batteryPower = batteryFull;
 
             uihandler.UpdateBattery(batteryPower / batteryFull);
-            flashLightAnimator.SetFloat("BatterPower", batteryPower);
+            flashLightAnimator.SetFloat("BatteryPower", batteryPower);
+            soundEffectsSource.PlaySound("Flashlight Rev");
+        }
+
+        public void ToggleBattery()
+        {
+            if (batteryPower <= 0) return;
+
+            isBatteryOn = !isBatteryOn;
+            flashLight.SetActive(isBatteryOn);
+            soundEffectsSource.PlaySound("Flashlight Click");
+        }
+
+        public void ThrowRock()
+        {
+            GameObject rock = Instantiate(rockPrefab);
+            rock.transform.position = player.transform.position;
+            rock.transform.rotation = player.transform.rotation;
+            rock.GetComponent<Rigidbody>().AddForce(rock.transform.forward * 700f);
         }
 
         // Update is called once per frame
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.F) && batteryPower > 0)
-            {
-                isBatteryOn = !isBatteryOn;
-                flashLight.SetActive(isBatteryOn);
-                soundEffectsSource.PlaySound("Flashlight Click");
-            }
-            else if (Input.GetMouseButtonDown(1))
-            {
-                ChargeBattery(10);
-            }
-
             if (isBatteryOn)
             {
                 batteryPower -= Time.deltaTime * batteryDecreaseSpeed;
