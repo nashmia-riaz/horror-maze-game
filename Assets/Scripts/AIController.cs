@@ -11,7 +11,8 @@ namespace Perdita
         {
             Patrol,
             Chase, 
-            Idle
+            Idle,
+            Attack
         }
 
         public AIState state;
@@ -24,18 +25,36 @@ namespace Perdita
 
         public float speed;
 
+        public Vector3 destination;
+
+        DistractionScript distraction;
+
         // Start is called before the first frame update
         void Start()
         {
             speed = 5;
             player = GameObject.FindGameObjectWithTag("Player");
             agent = gameObject.GetComponent<NavMeshAgent>();
+            distraction = GameObject.FindGameObjectWithTag("Distraction").GetComponent<DistractionScript>();
+            Patrol();
         }
 
-        public void Chase()
+        public void ChangeState(AIState newState, float newSpeed)
         {
-            speed = 4f;
+            state = newState;
+            speed = newSpeed;
+            agent.speed = speed;
+        }
+
+        public void Chase(Vector3 newDestination)
+        {
+            Debug.Log("AI is chasing");
+            StopAllCoroutines();
+            destination = newDestination;
+            agent.SetDestination(destination);
+
             state = AIState.Chase;
+            speed = 4f;
             agent.speed = speed;
         }
 
@@ -56,10 +75,22 @@ namespace Perdita
         // Update is called once per frame
         void Update()
         {
-            if(state == AIState.Chase)
+            //if AI is patrolling and has not reached target, keep going for the target
+            if(state == AIState.Patrol && agent.remainingDistance != 0 && !isCollidingWithPlayer)
             {
-                agent.SetDestination(player.transform.position);
+                agent.SetDestination(GameController.instance.player.transform.position);
             }
+        }
+
+        IEnumerator WaitIdle(float time, AIState newState)
+        {
+            while(time > 0)
+            {
+                time--;
+                yield return new WaitForSeconds(1);
+            }
+            distraction.Deactivate();
+            Patrol();
         }
 
         private void OnTriggerEnter(Collider other)
@@ -68,6 +99,18 @@ namespace Perdita
             {
                 agent.SetDestination(transform.position);
                 isCollidingWithPlayer = true;
+            }
+
+            if (other.gameObject.tag == "Distraction")
+            {
+                Debug.Log("Collided with distraction");
+                //distraction = other.gameObject.GetComponent<DistractionScript>();
+                if (other.gameObject.GetComponent<DistractionScript>().IsActive)
+                {
+                    Debug.Log("AI is going idle");
+                    state = AIState.Idle;
+                    StartCoroutine(WaitIdle(5f, AIState.Patrol));
+                }
             }
         }
 
@@ -80,7 +123,12 @@ namespace Perdita
         public void MoveTo(Vector3 point)
         {
             if (isCollidingWithPlayer) return;
+            if (state != AIState.Patrol) return;
             agent.SetDestination(point);
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
         }
     }
 }

@@ -30,6 +30,8 @@ namespace Perdita
 
         public GameObject rockPrefab;
 
+        public GameObject distraction;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -41,6 +43,8 @@ namespace Perdita
                 Destroy(this.gameObject);
 
             soundEffectsSource = GameObject.FindGameObjectWithTag("Sound Effects Source").GetComponent<SoundEffectsManager>();
+
+            distraction = GameObject.FindGameObjectWithTag("Distraction");
         }
 
         public void Initialize(Vector3 startPoint)
@@ -63,6 +67,12 @@ namespace Perdita
             uihandler.UpdateBattery(batteryPower / batteryFull);
             flashLightAnimator.SetFloat("BatteryPower", batteryPower);
             soundEffectsSource.PlaySound("Flashlight Rev");
+
+            //AI.ChangeState(AIController.AIState.Chase, 4f);
+            //AI.destination = player.transform.position;
+            AI.Chase(player.transform.position);
+
+            SetDistraction(player.transform.position);
         }
 
         public void ToggleBattery()
@@ -97,11 +107,19 @@ namespace Perdita
                 flashLightAnimator.SetFloat("BatteryPower", batteryPower);
                 uihandler.UpdateBattery(batteryPower / batteryFull);
             }
+
+            AI.destination = player.transform.position;
         }
 
         public void PlayerCollidedWithFloor(Vector3 pos)
         {
             AI.MoveTo(pos);
+        }
+
+        public void SetDistraction(Vector3 pos)
+        {
+            distraction.GetComponent<DistractionScript>().Activate(pos);
+            AI.Chase(pos);
         }
 
     }

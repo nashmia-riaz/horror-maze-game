@@ -2,20 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StoneController : MonoBehaviour
+namespace Perdita
 {
-    AudioSource audioSource;
+    public class StoneController : MonoBehaviour
+    {
+        AudioSource audioSource;
 
-    public AudioClip[] stoneSounds;
-    private void Start()
-    {
-        audioSource = gameObject.GetComponent<AudioSource>();
-    }
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "Ground")
+        public AudioClip[] stoneSounds;
+        private void Start()
         {
-            audioSource.PlayOneShot(stoneSounds[Random.Range(0, stoneSounds.Length)]);
+            audioSource = gameObject.GetComponent<AudioSource>();
         }
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (collision.gameObject.tag == "Ground")
+            {
+                GameController.instance.SetDistraction(transform.position);
+                audioSource.PlayOneShot(stoneSounds[Random.Range(0, stoneSounds.Length)]);
+            }
+        }
+
     }
 }

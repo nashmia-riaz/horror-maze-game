@@ -93,6 +93,7 @@ GameObject:
   - component: {fileID: 6773342740261301778}
   - component: {fileID: 2564710596512459205}
   - component: {fileID: 25863417780686521}
+  - component: {fileID: 5760236711169344095}
   m_Layer: 11
   m_Name: Rock
   m_TagString: Untagged
@@ -255,6 +256,7 @@ MonoBehaviour:
   stoneSounds:
   - {fileID: 8300000, guid: f8f53d8aa985f08469cb2d374172473b, type: 3}
   - {fileID: 8300000, guid: 8207ff01a759d454b892c98ed478a344, type: 3}
+  IsActive: 0
 --- !u!54 &2564710596512459205
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -283,6 +285,19 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!135 &5760236711169344095
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 593465173491225280}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 50
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &593465174448162342
 GameObject:

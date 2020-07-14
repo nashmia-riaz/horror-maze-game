@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ground
   - Sound Effects Source
+  - Distraction
   layers:
   - Default
   - TransparentFX
@@ -17,8 +18,8 @@ TagManager:
   - 
   - Top View
   - Top View Main Map
-  - 
-  - 
+  - Player
+  - Rocks
   - 
   - 
   - 
