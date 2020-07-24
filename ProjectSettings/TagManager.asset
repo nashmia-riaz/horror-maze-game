@@ -7,6 +7,7 @@ TagManager:
   - Ground
   - Sound Effects Source
   - Distraction
+  - End Point
   layers:
   - Default
   - TransparentFX

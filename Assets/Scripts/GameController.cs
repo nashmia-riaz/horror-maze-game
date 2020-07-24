@@ -32,6 +32,8 @@ namespace Perdita
 
         public GameObject distraction;
 
+        public GameObject endPointPrefab;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -55,6 +57,9 @@ namespace Perdita
             Debug.Log("Setting camera position to " + mapCamera.transform.position);
 
             mapCamera.GetComponent<Camera>().orthographicSize = size * 2 + 5;
+
+            GameObject endPoint = Instantiate(endPointPrefab);
+            endPoint.transform.position = new Vector3(maze.cells[size-1, size-1].posX, 1.5f, maze.cells[size-1, size-1].posY);
         }
 
         public void ChargeBattery(float charge)
@@ -122,5 +127,9 @@ namespace Perdita
             AI.Chase(pos);
         }
 
+        public void EndGame()
+        {
+            Debug.Log("Player reached the end");
+        }
     }
 }

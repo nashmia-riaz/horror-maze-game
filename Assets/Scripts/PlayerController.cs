@@ -38,5 +38,13 @@ namespace Perdita
                 GameController.instance.PlayerCollidedWithFloor(transform.position);
             }
         }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if(other.gameObject.tag == "End Point")
+            {
+                GameController.instance.EndGame();
+            }
+        }
     }
 }
