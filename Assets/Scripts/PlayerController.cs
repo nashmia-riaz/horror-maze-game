@@ -6,6 +6,8 @@ namespace Perdita
 {
     public class PlayerController : MonoBehaviour
     {
+        public float health;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -45,6 +47,12 @@ namespace Perdita
             {
                 GameController.instance.EndGame();
             }
+        }
+
+        public void DoDamage()
+        {
+            health -= 10;
+            if (health <= 0) health = 0;
         }
     }
 }

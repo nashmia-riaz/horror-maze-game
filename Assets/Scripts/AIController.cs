@@ -29,6 +29,9 @@ namespace Perdita
 
         DistractionScript distraction;
 
+        delegate void StateChangeDelegate();
+        StateChangeDelegate stateChange;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -72,6 +75,14 @@ namespace Perdita
             agent.speed = speed;
         }
 
+        public void Attack()
+        {
+            speed = 0;
+            state = AIState.Attack;
+            agent.speed = speed;
+            GameController.instance.AttackPlayer();
+        }
+
         // Update is called once per frame
         void Update()
         {
@@ -82,34 +93,44 @@ namespace Perdita
             }
         }
 
-        IEnumerator WaitIdle(float time, AIState newState)
+        IEnumerator WaitIdle(float time, StateChangeDelegate newState)
         {
             while(time > 0)
             {
                 time--;
                 yield return new WaitForSeconds(1);
             }
+            newState();
+        }
+
+        void EndDistraction()
+        {
             distraction.Deactivate();
             Patrol();
         }
+
 
         private void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.tag == "Player" && !isCollidingWithPlayer)
             {
-                agent.SetDestination(transform.position);
                 isCollidingWithPlayer = true;
+                Attack();
+
+                StartCoroutine(WaitIdle(2f, ()=> {
+                    Attack();
+                }));
             }
 
             if (other.gameObject.tag == "Distraction")
             {
                 Debug.Log("Collided with distraction");
-                //distraction = other.gameObject.GetComponent<DistractionScript>();
+
                 if (other.gameObject.GetComponent<DistractionScript>().IsActive)
                 {
                     Debug.Log("AI is going idle");
                     state = AIState.Idle;
-                    StartCoroutine(WaitIdle(5f, AIState.Patrol));
+                    StartCoroutine(WaitIdle(5f, EndDistraction));
                 }
             }
         }
@@ -117,7 +138,10 @@ namespace Perdita
         private void OnTriggerExit(Collider other)
         {
             if (other.gameObject.tag == "Player" && isCollidingWithPlayer)
+            {
                 isCollidingWithPlayer = false;
+                Patrol();
+            }
         }
 
         public void MoveTo(Vector3 point)

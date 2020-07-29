@@ -12,6 +12,7 @@ namespace Perdita
         public UIHandler uihandler;
 
         public GameObject player;
+        public PlayerController playerController;
         public AIController AI;
         public GameObject mapCamera;
 
@@ -130,6 +131,13 @@ namespace Perdita
         public void EndGame()
         {
             Debug.Log("Player reached the end");
+        }
+
+        public void AttackPlayer()
+        {
+            playerController.DoDamage();
+            uihandler.RedFlash();
+            uihandler.UpdateHealth(playerController.health / 100f);
         }
     }
 }
