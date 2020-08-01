@@ -32,6 +32,8 @@ namespace Perdita
         delegate void StateChangeDelegate();
         StateChangeDelegate stateChange;
 
+        float attackTimer, attackTime;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -40,6 +42,9 @@ namespace Perdita
             agent = gameObject.GetComponent<NavMeshAgent>();
             distraction = GameObject.FindGameObjectWithTag("Distraction").GetComponent<DistractionScript>();
             Patrol();
+
+            attackTimer = 0;
+            attackTime = 3;
         }
 
         public void ChangeState(AIState newState, float newSpeed)
@@ -80,7 +85,6 @@ namespace Perdita
             speed = 0;
             state = AIState.Attack;
             agent.speed = speed;
-            GameController.instance.AttackPlayer();
         }
 
         // Update is called once per frame
@@ -90,6 +94,16 @@ namespace Perdita
             if(state == AIState.Patrol && agent.remainingDistance != 0 && !isCollidingWithPlayer)
             {
                 agent.SetDestination(GameController.instance.player.transform.position);
+            }
+
+            if(state == AIState.Attack)
+            {
+                attackTimer += Time.deltaTime;
+                if (attackTimer > attackTime)
+                {
+                    attackTimer = 0;
+                    GameController.instance.AttackPlayer();
+                }
             }
         }
 
@@ -116,10 +130,7 @@ namespace Perdita
             {
                 isCollidingWithPlayer = true;
                 Attack();
-
-                StartCoroutine(WaitIdle(2f, ()=> {
-                    Attack();
-                }));
+                GameController.instance.AttackPlayer();
             }
 
             if (other.gameObject.tag == "Distraction")

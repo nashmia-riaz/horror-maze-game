@@ -49,9 +49,12 @@ namespace Perdita
             }
         }
 
-        public void DoDamage()
+        public void DoDamage(int damage)
         {
-            health -= 10;
+            if (health <= 0) return;
+
+            Debug.Log("Player took damage: "+health);
+            health -= damage;
             if (health <= 0) health = 0;
         }
     }

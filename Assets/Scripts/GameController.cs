@@ -16,6 +16,8 @@ namespace Perdita
         public AIController AI;
         public GameObject mapCamera;
 
+        bool hasGameStarted, hasGameEnded;
+
         public GameObject flashLight;
         public Animator flashLightAnimator;
 
@@ -35,6 +37,8 @@ namespace Perdita
 
         public GameObject endPointPrefab;
 
+        float gameTimer;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -48,6 +52,11 @@ namespace Perdita
             soundEffectsSource = GameObject.FindGameObjectWithTag("Sound Effects Source").GetComponent<SoundEffectsManager>();
 
             distraction = GameObject.FindGameObjectWithTag("Distraction");
+
+            gameTimer = 0;
+
+            hasGameStarted = true;
+            hasGameEnded = false;
         }
 
         public void Initialize(Vector3 startPoint)
@@ -101,6 +110,11 @@ namespace Perdita
         // Update is called once per frame
         void Update()
         {
+            if (!hasGameStarted || hasGameEnded) return;
+
+            gameTimer += Time.deltaTime;
+            uihandler.UpdateTimer(gameTimer);
+
             if (isBatteryOn)
             {
                 batteryPower -= Time.deltaTime * batteryDecreaseSpeed;
@@ -135,7 +149,9 @@ namespace Perdita
 
         public void AttackPlayer()
         {
-            playerController.DoDamage();
+            Debug.Log("Attack player");
+            playerController.DoDamage(5);
+            if (playerController.health <= 0) return;
             uihandler.RedFlash();
             uihandler.UpdateHealth(playerController.health / 100f);
         }

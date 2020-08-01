@@ -16,6 +16,8 @@ namespace Perdita
 
         public Animator UIAnimator;
 
+        public Text timer;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -50,6 +52,28 @@ namespace Perdita
         public void UpdateHealth(float fill)
         {
             healthFill.fillAmount = fill;
+        }
+
+        public void UpdateTimer(float time)
+        {
+            int minutes = 0;
+            int seconds = (int) time;
+
+            if(seconds > 60)
+            {
+                minutes = seconds / 60;
+                seconds = seconds % 60;
+            }
+
+            string timeElapsed = "";
+
+            if (minutes < 10) timeElapsed += "0" + minutes + ":";
+            else timeElapsed += minutes + ":";
+
+            if (seconds < 10) timeElapsed += "0" + seconds;
+            else timeElapsed += seconds;
+
+            timer.text = timeElapsed;
         }
     }
 }
