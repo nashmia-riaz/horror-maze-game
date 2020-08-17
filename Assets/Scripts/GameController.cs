@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Perdita
 {
@@ -144,7 +145,12 @@ namespace Perdita
 
         public void EndGame()
         {
+            if (hasGameEnded) return;
+            int mazeSize = PlayerPrefs.GetInt("MazeSize", 6);
+            PlayerPrefs.SetInt("MazeSize", mazeSize++);
+            hasGameEnded = true;
             Debug.Log("Player reached the end");
+            SceneManager.LoadScene("Menu");
         }
 
         public void AttackPlayer()

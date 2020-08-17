@@ -26,6 +26,7 @@ namespace Perdita
         // Start is called before the first frame update
         void Start()
         {
+            mazeSize = PlayerPrefs.GetInt("MazeSize", 6);
             courseComplete = false;
             currentCol = currentRow = 0;
             rowCount = colCount = mazeSize;
