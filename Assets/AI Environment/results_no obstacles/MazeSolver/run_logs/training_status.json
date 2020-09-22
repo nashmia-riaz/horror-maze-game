@@ -1,0 +1,23 @@
+{
+    "MazeSolver": {
+        "checkpoints": [
+            {
+                "steps": 300005,
+                "file_path": "results\\MazeSolver\\MazeSolver\\MazeSolver-300005.nn",
+                "reward": 1.6753508898249843,
+                "creation_time": 1599319854.0401323
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 300005,
+            "file_path": "results\\MazeSolver\\MazeSolver.nn",
+            "reward": 1.6753508898249843,
+            "creation_time": 1599319854.0401323
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.1.0",
+        "mlagents_version": "0.19.0",
+        "tensorflow_version": "1.7.1"
+    }
+}

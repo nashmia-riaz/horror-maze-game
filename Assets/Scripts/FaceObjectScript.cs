@@ -5,17 +5,19 @@ using UnityEngine;
 public class FaceObjectScript : MonoBehaviour
 {
     public Transform FaceObject;
+    public string faceObjectTag;
 
     // Start is called before the first frame update
     void Start()
     {
-        if(FaceObject == null)
-            FaceObject = GameObject.FindGameObjectWithTag("Player").transform;
+        if(FaceObject == null && faceObjectTag != null && faceObjectTag != "")
+            FaceObject = GameObject.FindGameObjectWithTag(faceObjectTag).transform;
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.LookAt(FaceObject);
+        if(FaceObject != null)
+            transform.LookAt(FaceObject);
     }
 }

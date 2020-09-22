@@ -1,0 +1,47 @@
+{
+    "MazeSolver": {
+        "checkpoints": [
+            {
+                "steps": 197552,
+                "file_path": "results\\MazeSolver\\MazeSolver\\MazeSolver-197552.nn",
+                "reward": null,
+                "creation_time": 1599510858.6412067
+            },
+            {
+                "steps": 197572,
+                "file_path": "results\\MazeSolver\\MazeSolver\\MazeSolver-197572.nn",
+                "reward": 1.8079999685287476,
+                "creation_time": 1599532682.7072186
+            },
+            {
+                "steps": 499995,
+                "file_path": "results\\MazeSolver\\MazeSolver\\MazeSolver-499995.nn",
+                "reward": null,
+                "creation_time": 1599617281.7747016
+            },
+            {
+                "steps": 999986,
+                "file_path": "results\\MazeSolver\\MazeSolver\\MazeSolver-999986.nn",
+                "reward": 1.825882357709548,
+                "creation_time": 1599632283.7934463
+            },
+            {
+                "steps": 1000266,
+                "file_path": "results\\MazeSolver\\MazeSolver\\MazeSolver-1000266.nn",
+                "reward": 1.763374999165535,
+                "creation_time": 1599632285.2110734
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 1000266,
+            "file_path": "results\\MazeSolver\\MazeSolver.nn",
+            "reward": 1.763374999165535,
+            "creation_time": 1599632285.2110734
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.1.0",
+        "mlagents_version": "0.19.0",
+        "tensorflow_version": "1.7.1"
+    }
+}

@@ -6,7 +6,11 @@ namespace Perdita
 {
     public class MinimapCamController : MonoBehaviour
     {
+        [SerializeField]
+        bool rotateWithTarget;
 
+        [SerializeField]
+        float distanceFromTarget;
         public Transform player;
 
         // Start is called before the first frame update
@@ -24,9 +28,11 @@ namespace Perdita
         private void LateUpdate()
         {
             Vector3 newPosition = player.position;
-            newPosition.y = 100;
+            newPosition.y = distanceFromTarget;
             transform.position = newPosition;
-            transform.rotation = Quaternion.Euler(90f, player.eulerAngles.y, 0f);
+
+            if(rotateWithTarget)
+                transform.rotation = Quaternion.Euler(90f, player.eulerAngles.y, 0f);
         }
     }
 }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5144768280678571147}
   - component: {fileID: 3517107948875081393}
   - component: {fileID: 7021282176876064017}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,9 +105,9 @@ GameObject:
   - component: {fileID: 8557633593681701421}
   - component: {fileID: 8557633593681701420}
   - component: {fileID: 8557633593681701423}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Wall without light
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295

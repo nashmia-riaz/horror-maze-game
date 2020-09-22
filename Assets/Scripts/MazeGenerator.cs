@@ -19,14 +19,50 @@ namespace Perdita
 
         bool courseComplete;
 
-        public int mazeSize = 6;
+        public int tileSize = 5;
+        public int mazeSize;
 
         public GameController gameController;
+
+        public Transform mazeObject;
+        public GameObject EndPoint;
+
+        bool isMazeInitialized;
+        public bool initializeMaze;
 
         // Start is called before the first frame update
         void Start()
         {
-            mazeSize = PlayerPrefs.GetInt("MazeSize", 6);
+            if (!initializeMaze) return;
+
+            isMazeInitialized = false;
+            InitializeMaze();
+        }
+
+        void DestroyMaze()
+        {
+            if (!isMazeInitialized) return;
+
+            for (int i = 0; i < rowCount; i++)
+            {
+                for (int j = 0; j < colCount; j++)
+                {
+                    Destroy(cellObjects[i, j]);
+                }
+            }
+
+            isMazeInitialized = false;
+        }
+
+        public void ResetMaze()
+        {
+            DestroyMaze();
+            InitializeMaze();
+        }
+        public void InitializeMaze()
+        {
+            if (mazeSize == 0)
+                mazeSize = PlayerPrefs.GetInt("MazeSize", 6);
             courseComplete = false;
             currentCol = currentRow = 0;
             rowCount = colCount = mazeSize;
@@ -41,8 +77,9 @@ namespace Perdita
                     cellObjects[i, j] = Instantiate(cellPrefab);
                     cells[i, j] = cellObjects[i, j].GetComponent<Cell>();
                     cellObjects[i, j].name = "Cell (" + i + ", " + j + ")";
+                    cellObjects[i, j].transform.SetParent(mazeObject, true);
 
-                    cells[i, j].SetPosition(i * mazeSize, j * mazeSize);
+                    cells[i, j].SetPosition(i * tileSize, j * tileSize);
                     cells[i, j].hasWestWall = false;
                     cells[i, j].hasNorthWall = false;
 
@@ -50,6 +87,11 @@ namespace Perdita
                         cells[i, j].hasWestWall = true;
                     if (j == colCount - 1)
                         cells[i, j].hasNorthWall = true;
+
+                    if (i == rowCount - 1 && j == colCount - 1)
+                    {
+                        EndPoint.transform.position = new Vector3(i * tileSize, 1.5f, j * tileSize);
+                    }
                 }
                 print("Making cells for " + i);
             }
@@ -57,7 +99,11 @@ namespace Perdita
             HuntAndKill();
             RenderMaze();
             navMesh.BuildNavMesh();
-            gameController.Initialize(cells[0, 0].transform.position + new Vector3(0, 1.5f, 0));
+
+            if (gameController != null)
+                gameController.Initialize(cells[0, 0].transform.position + new Vector3(0, 1.5f, 0));
+
+            isMazeInitialized = true;
         }
 
         public void RenderMaze()

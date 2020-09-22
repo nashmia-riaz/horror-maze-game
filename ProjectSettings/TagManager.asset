@@ -8,6 +8,7 @@ TagManager:
   - Sound Effects Source
   - Distraction
   - End Point
+  - Wall
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - Top View Main Map
   - Player
   - Rocks
-  - 
+  - Wall
   - 
   - 
   - 

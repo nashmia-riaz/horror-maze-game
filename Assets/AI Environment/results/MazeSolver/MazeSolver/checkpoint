@@ -1,0 +1,2 @@
+model_checkpoint_path: "MazeSolver-789612.ckpt"
+all_model_checkpoint_paths: "MazeSolver-789612.ckpt"
