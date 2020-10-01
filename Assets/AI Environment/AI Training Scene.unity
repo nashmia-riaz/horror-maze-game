@@ -394,17 +394,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: c93eb32f1fb801d4db30c8586edbdd93,
-        type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 1626720963292083857, guid: 5545fb63bcc0a3f44914d64c8619cc69,
         type: 3}
       propertyPath: m_InferenceDevice
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1626720963292083857, guid: 5545fb63bcc0a3f44914d64c8619cc69,
+        type: 3}
+      propertyPath: m_BrainParameters.VectorActionSpaceType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1626720963292083857, guid: 5545fb63bcc0a3f44914d64c8619cc69,
+        type: 3}
+      propertyPath: m_BrainParameters.VectorActionSize.Array.data[0]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1626720963292083857, guid: 5545fb63bcc0a3f44914d64c8619cc69,
+        type: 3}
+      propertyPath: m_BrainParameters.VectorObservationSize
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 6894345123690318299, guid: 5545fb63bcc0a3f44914d64c8619cc69,
         type: 3}
       propertyPath: mazeSize
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5545fb63bcc0a3f44914d64c8619cc69, type: 3}

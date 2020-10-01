@@ -12,6 +12,7 @@ namespace Perdita
             Patrol,
             Chase, 
             Idle,
+            Distract,
             Attack
         }
 
@@ -34,15 +35,23 @@ namespace Perdita
 
         float attackTimer, attackTime;
 
+        [SerializeField]
+        Animator animator;
+
+        private void Awake()
+        {
+            player = GameObject.FindGameObjectWithTag("Player");
+            //animator = transform.Find("Alien").GetComponent<Animator>();
+            agent = gameObject.GetComponent<NavMeshAgent>();
+        }
+
         // Start is called before the first frame update
         void Start()
         {
             speed = 5;
-            player = GameObject.FindGameObjectWithTag("Player");
-            agent = gameObject.GetComponent<NavMeshAgent>();
+          
             distraction = GameObject.FindGameObjectWithTag("Distraction").GetComponent<DistractionScript>();
             Patrol();
-
             attackTimer = 0;
             attackTime = 3;
         }
@@ -64,6 +73,8 @@ namespace Perdita
             state = AIState.Chase;
             speed = 4f;
             agent.speed = speed;
+
+            animator.SetTrigger("Chase");
         }
 
         public void Idle()
@@ -71,6 +82,16 @@ namespace Perdita
             state = AIState.Idle;
             speed = 0;
             agent.speed = speed;
+
+            animator.SetTrigger("Idle");
+        }
+        public void Distract()
+        {
+            state = AIState.Distract;
+            speed = 0;
+            agent.speed = speed;
+
+            animator.SetTrigger("Distracted");
         }
 
         public void Patrol()
@@ -78,6 +99,8 @@ namespace Perdita
             speed = 2f;
             state = AIState.Patrol;
             agent.speed = speed;
+
+            animator.SetTrigger("Patrol");
         }
 
         public void Attack()
@@ -85,6 +108,8 @@ namespace Perdita
             speed = 0;
             state = AIState.Attack;
             agent.speed = speed;
+
+            animator.SetTrigger("Attack");
         }
 
         // Update is called once per frame
@@ -126,13 +151,6 @@ namespace Perdita
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.tag == "Player" && !isCollidingWithPlayer)
-            {
-                isCollidingWithPlayer = true;
-                Attack();
-                GameController.instance.AttackPlayer();
-            }
-
             if (other.gameObject.tag == "Distraction")
             {
                 Debug.Log("Collided with distraction");
@@ -140,9 +158,16 @@ namespace Perdita
                 if (other.gameObject.GetComponent<DistractionScript>().IsActive)
                 {
                     Debug.Log("AI is going idle");
-                    state = AIState.Idle;
+                    //state = AIState.Idle();
+                    Distract();
                     StartCoroutine(WaitIdle(5f, EndDistraction));
                 }
+            }
+            else if (other.gameObject.tag == "Player" && !isCollidingWithPlayer)
+            {
+                isCollidingWithPlayer = true;
+                Attack();
+                GameController.instance.AttackPlayer();
             }
         }
 

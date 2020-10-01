@@ -194,7 +194,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1001 &76689169
 PrefabInstance:
@@ -257,7 +257,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2000000, guid: 13e969f076e9a6645a6428a6c4ca4b97, type: 3}
       propertyPath: m_CullingMask.m_Bits
-      value: 3127
+      value: 7223
       objectReference: {fileID: 0}
     - target: {fileID: 1678544327, guid: 13e969f076e9a6645a6428a6c4ca4b97, type: 3}
       propertyPath: health
@@ -269,6 +269,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13e969f076e9a6645a6428a6c4ca4b97, type: 3}
+--- !u!1 &158804503 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3559804447859891787, guid: 593f72ac3a2de38489347acbc3d19606,
+    type: 3}
+  m_PrefabInstance: {fileID: 3559804446945844283}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &217754908
 GameObject:
   m_ObjectHideFlags: 0
@@ -409,6 +415,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 249037728}
   m_CullTransparentMesh: 0
+--- !u!95 &376444984 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 8606823002054848432, guid: d32dc8be62eb38648a02d2dd65e25cfe,
+    type: 3}
+  m_PrefabInstance: {fileID: 6834836127451651468}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &628029494
 GameObject:
   m_ObjectHideFlags: 0
@@ -1337,6 +1349,12 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!195 &1394489992 stripped
+NavMeshAgent:
+  m_CorrespondingSourceObject: {fileID: 6834836126410228057, guid: d32dc8be62eb38648a02d2dd65e25cfe,
+    type: 3}
+  m_PrefabInstance: {fileID: 6834836127451651468}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1451679377
 GameObject:
   m_ObjectHideFlags: 0
@@ -1702,7 +1720,7 @@ PrefabInstance:
     - target: {fileID: 5720154184785467487, guid: 75bb3d7854e21d341bd8143626225282,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5720154184785467487, guid: 75bb3d7854e21d341bd8143626225282,
         type: 3}
@@ -1718,6 +1736,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6355457874277187261, guid: 75bb3d7854e21d341bd8143626225282,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 75bb3d7854e21d341bd8143626225282, type: 3}
@@ -1780,8 +1803,9 @@ MonoBehaviour:
   tileSize: 5
   mazeSize: 5
   gameController: {fileID: 1451679378}
-  mazeObject: {fileID: 0}
-  endPointPrefab: {fileID: 0}
+  mazeObject: {fileID: 1791358024}
+  EndPoint: {fileID: 158804503}
+  initializeMaze: 1
 --- !u!4 &1791358024
 Transform:
   m_ObjectHideFlags: 0
@@ -1956,6 +1980,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54044c6e47574464a98e4ff8246d709f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotateWithTarget: 0
+  distanceFromTarget: 10
   player: {fileID: 1678544332}
 --- !u!1 &1932024969 stripped
 GameObject:
@@ -2409,7 +2435,7 @@ PrefabInstance:
     - target: {fileID: 590482905124202602, guid: 0872d3e465c46df46921375f425a36ed,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 590482905124202602, guid: 0872d3e465c46df46921375f425a36ed,
         type: 3}
@@ -2458,7 +2484,7 @@ PrefabInstance:
     - target: {fileID: 6834836126410228056, guid: d32dc8be62eb38648a02d2dd65e25cfe,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1.24
       objectReference: {fileID: 0}
     - target: {fileID: 6834836126410228056, guid: d32dc8be62eb38648a02d2dd65e25cfe,
         type: 3}
@@ -2510,5 +2536,20 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 1889067756}
+    - target: {fileID: 6834836126410228060, guid: d32dc8be62eb38648a02d2dd65e25cfe,
+        type: 3}
+      propertyPath: agent
+      value: 
+      objectReference: {fileID: 1394489992}
+    - target: {fileID: 6834836126410228060, guid: d32dc8be62eb38648a02d2dd65e25cfe,
+        type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1678544326}
+    - target: {fileID: 6834836126410228060, guid: d32dc8be62eb38648a02d2dd65e25cfe,
+        type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 376444984}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d32dc8be62eb38648a02d2dd65e25cfe, type: 3}

@@ -2,41 +2,41 @@
     "MazeSolver": {
         "checkpoints": [
             {
-                "steps": 184862,
-                "file_path": "results\\MazeSolver\\MazeSolver\\MazeSolver-184862.nn",
-                "reward": -5.137999415397644,
-                "creation_time": 1600364750.56266
+                "steps": 37169,
+                "file_path": "results\\MazeSolver\\MazeSolver\\MazeSolver-37169.nn",
+                "reward": -0.896551724137931,
+                "creation_time": 1601230241.6234136
             },
             {
-                "steps": 267976,
-                "file_path": "results\\MazeSolver\\MazeSolver\\MazeSolver-267976.nn",
-                "reward": -2.414374887943268,
-                "creation_time": 1600368769.8909898
+                "steps": 499998,
+                "file_path": "results\\MazeSolver\\MazeSolver\\MazeSolver-499998.nn",
+                "reward": -1.0,
+                "creation_time": 1601264689.7336292
             },
             {
-                "steps": 499948,
-                "file_path": "results\\MazeSolver\\MazeSolver\\MazeSolver-499948.nn",
-                "reward": -2.347374811768532,
-                "creation_time": 1600451234.9779084
+                "steps": 999997,
+                "file_path": "results\\MazeSolver\\MazeSolver\\MazeSolver-999997.nn",
+                "reward": -1.0,
+                "creation_time": 1601292861.775256
             },
             {
-                "steps": 783793,
-                "file_path": "results\\MazeSolver\\MazeSolver\\MazeSolver-783793.nn",
-                "reward": -3.7970001697540283,
-                "creation_time": 1600458267.0272756
+                "steps": 1066424,
+                "file_path": "results\\MazeSolver\\MazeSolver\\MazeSolver-1066424.nn",
+                "reward": -1.0,
+                "creation_time": 1601297071.0754788
             },
             {
-                "steps": 789612,
-                "file_path": "results\\MazeSolver\\MazeSolver\\MazeSolver-789612.nn",
-                "reward": -10.344000339508057,
-                "creation_time": 1600631165.3308856
+                "steps": 1140943,
+                "file_path": "results\\MazeSolver\\MazeSolver\\MazeSolver-1140943.nn",
+                "reward": -1.0,
+                "creation_time": 1601303669.9563801
             }
         ],
         "final_checkpoint": {
-            "steps": 789612,
+            "steps": 1140943,
             "file_path": "results\\MazeSolver\\MazeSolver.nn",
-            "reward": -10.344000339508057,
-            "creation_time": 1600631165.3308856
+            "reward": -1.0,
+            "creation_time": 1601303669.9563801
         }
     },
     "metadata": {
