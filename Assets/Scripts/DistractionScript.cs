@@ -23,6 +23,7 @@ public class DistractionScript : MonoBehaviour
     public void Deactivate()
     {
         IsActive = false;
+        StopAllCoroutines();
     }
 
     IEnumerator ActiveFor(float time)

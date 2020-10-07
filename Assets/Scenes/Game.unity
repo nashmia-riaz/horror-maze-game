@@ -257,7 +257,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2000000, guid: 13e969f076e9a6645a6428a6c4ca4b97, type: 3}
       propertyPath: m_CullingMask.m_Bits
-      value: 7223
+      value: 15415
       objectReference: {fileID: 0}
     - target: {fileID: 1678544327, guid: 13e969f076e9a6645a6428a6c4ca4b97, type: 3}
       propertyPath: health
@@ -415,12 +415,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 249037728}
   m_CullTransparentMesh: 0
---- !u!95 &376444984 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 8606823002054848432, guid: d32dc8be62eb38648a02d2dd65e25cfe,
-    type: 3}
-  m_PrefabInstance: {fileID: 6834836127451651468}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &377617875
 GameObject:
   m_ObjectHideFlags: 0
@@ -1580,12 +1574,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!195 &1394489992 stripped
-NavMeshAgent:
-  m_CorrespondingSourceObject: {fileID: 6834836126410228057, guid: d32dc8be62eb38648a02d2dd65e25cfe,
-    type: 3}
-  m_PrefabInstance: {fileID: 6834836127451651468}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1451679377
 GameObject:
   m_ObjectHideFlags: 0
@@ -1620,7 +1608,11 @@ MonoBehaviour:
   player: {fileID: 1678544326}
   playerController: {fileID: 1678544327}
   AI: {fileID: 1181965520}
+  enemyObject: {fileID: 0}
+  enemyPrefab: {fileID: 6834836126410228035, guid: d32dc8be62eb38648a02d2dd65e25cfe,
+    type: 3}
   mapCamera: {fileID: 28430282}
+  isPaused: 0
   flashLight: {fileID: 1932024969}
   flashLightAnimator: {fileID: 1932024971}
   batteryPower: 100
@@ -2595,6 +2587,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2174542664389489476, guid: c85373d4634f81d44879db126161e522,
+        type: 3}
+      propertyPath: m_LayerMask.m_Bits
+      value: 6199
+      objectReference: {fileID: 0}
     - target: {fileID: 2174542664389489477, guid: c85373d4634f81d44879db126161e522,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2837,6 +2834,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: AI
       objectReference: {fileID: 0}
+    - target: {fileID: 6834836126410228035, guid: d32dc8be62eb38648a02d2dd65e25cfe,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6834836126410228056, guid: d32dc8be62eb38648a02d2dd65e25cfe,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2845,7 +2847,7 @@ PrefabInstance:
     - target: {fileID: 6834836126410228056, guid: d32dc8be62eb38648a02d2dd65e25cfe,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.24
+      value: 2.72
       objectReference: {fileID: 0}
     - target: {fileID: 6834836126410228056, guid: d32dc8be62eb38648a02d2dd65e25cfe,
         type: 3}
@@ -2899,18 +2901,8 @@ PrefabInstance:
       objectReference: {fileID: 1889067756}
     - target: {fileID: 6834836126410228060, guid: d32dc8be62eb38648a02d2dd65e25cfe,
         type: 3}
-      propertyPath: agent
-      value: 
-      objectReference: {fileID: 1394489992}
-    - target: {fileID: 6834836126410228060, guid: d32dc8be62eb38648a02d2dd65e25cfe,
-        type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 1678544326}
-    - target: {fileID: 6834836126410228060, guid: d32dc8be62eb38648a02d2dd65e25cfe,
-        type: 3}
-      propertyPath: animator
-      value: 
-      objectReference: {fileID: 376444984}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d32dc8be62eb38648a02d2dd65e25cfe, type: 3}

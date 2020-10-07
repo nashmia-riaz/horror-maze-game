@@ -15,10 +15,9 @@ namespace Perdita
             Distract,
             Attack
         }
-
-        public AIState state;
-        public Camera cam;
-        public NavMeshAgent agent;
+        [SerializeField]
+        AIState state;
+        NavMeshAgent agent;
 
         public GameObject player;
 
@@ -35,13 +34,12 @@ namespace Perdita
 
         float attackTimer, attackTime;
 
-        [SerializeField]
         Animator animator;
 
         private void Awake()
         {
             player = GameObject.FindGameObjectWithTag("Player");
-            //animator = transform.Find("Alien").GetComponent<Animator>();
+            animator = transform.Find("Alien").GetComponent<Animator>();
             agent = gameObject.GetComponent<NavMeshAgent>();
         }
 
@@ -67,7 +65,6 @@ namespace Perdita
         {
             Debug.Log("AI is chasing");
             StopAllCoroutines();
-            destination = newDestination;
             agent.SetDestination(destination);
 
             state = AIState.Chase;
@@ -116,9 +113,9 @@ namespace Perdita
         void Update()
         {
             //if AI is patrolling and has not reached target, keep going for the target
-            if(state == AIState.Patrol && agent.remainingDistance != 0 && !isCollidingWithPlayer)
+            if((state == AIState.Patrol || state == AIState.Chase) && !isCollidingWithPlayer)
             {
-                agent.SetDestination(GameController.instance.player.transform.position);
+                agent.SetDestination(destination);
             }
 
             if(state == AIState.Attack)
@@ -145,7 +142,8 @@ namespace Perdita
         void EndDistraction()
         {
             distraction.Deactivate();
-            Patrol();
+            Idle();
+            StartCoroutine(WaitIdle(1, () => { Patrol(); }));
         }
 
 
@@ -155,10 +153,9 @@ namespace Perdita
             {
                 Debug.Log("Collided with distraction");
 
-                if (other.gameObject.GetComponent<DistractionScript>().IsActive)
+                if (other.gameObject.GetComponent<DistractionScript>().IsActive && state != AIState.Distract)
                 {
                     Debug.Log("AI is going idle");
-                    //state = AIState.Idle();
                     Distract();
                     StartCoroutine(WaitIdle(5f, EndDistraction));
                 }
@@ -176,7 +173,8 @@ namespace Perdita
             if (other.gameObject.tag == "Player" && isCollidingWithPlayer)
             {
                 isCollidingWithPlayer = false;
-                Patrol();
+                animator.SetTrigger("EndAttack");
+                Chase(player.transform.position);
             }
         }
 

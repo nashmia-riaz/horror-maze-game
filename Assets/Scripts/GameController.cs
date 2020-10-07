@@ -15,6 +15,8 @@ namespace Perdita
         public GameObject player;
         public PlayerController playerController;
         public AIController AI;
+        public GameObject enemyObject, enemyPrefab;
+        
         public GameObject mapCamera;
 
         bool hasGameStarted, hasGameEnded;
@@ -66,8 +68,27 @@ namespace Perdita
             volume = PlayerPrefs.GetFloat("volume", 1);
 
             sfxSource.volume = musicSource.volume = volume;
+
+            StartCoroutine(WaitBeforeEnemySpawn(3));
         }
 
+        IEnumerator WaitBeforeEnemySpawn(float seconds)
+        {
+            while (seconds > 0)
+            {
+                seconds--;
+                yield return new WaitForSeconds(1);
+            }
+            SpawnEnemy();
+        }
+
+        void SpawnEnemy()
+        {
+            enemyObject = Instantiate(enemyPrefab);
+            enemyObject.transform.position = new Vector3(maze.cells[0, 0].posX, 1.0f, maze.cells[0, 0].posY);
+            AI = enemyObject.GetComponent<AIController>();
+            AI.player = player;
+        }
         public void Initialize(Vector3 startPoint)
         {
             player.transform.position = new Vector3(maze.cells[0, 0].posX, 100, maze.cells[0, 0].posY);
@@ -107,10 +128,11 @@ namespace Perdita
             flashLight.SetActive(isBatteryOn);
             soundEffectsSource.PlaySound("Flashlight Click");
         }
-
+        //public GameObject rock;
         public void ThrowRock()
         {
             GameObject rock = Instantiate(rockPrefab);
+            rock.SetActive(true);
             rock.transform.position = player.transform.position;
             rock.transform.rotation = player.transform.rotation;
             rock.GetComponent<Rigidbody>().AddForce(rock.transform.forward * 700f);
@@ -155,19 +177,20 @@ namespace Perdita
                     Time.timeScale = 1;
                 }
             }
-
-            AI.destination = player.transform.position;
         }
 
         public void PlayerCollidedWithFloor(Vector3 pos)
         {
-            AI.MoveTo(pos);
+            if (AI != null)
+                AI.destination = pos;
+            Debug.Log(pos);
         }
 
         public void SetDistraction(Vector3 pos)
         {
             distraction.GetComponent<DistractionScript>().Activate(pos);
-            AI.Chase(pos);
+            if(AI != null)
+                AI.Chase(pos);
         }
 
         public void EndGame()
