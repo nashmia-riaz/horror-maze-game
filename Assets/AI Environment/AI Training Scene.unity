@@ -127,6 +127,59 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1626720963274949364}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &665578340 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1626720962262170045, guid: 5545fb63bcc0a3f44914d64c8619cc69,
+    type: 3}
+  m_PrefabInstance: {fileID: 1626720963274949364}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &665578346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 665578340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 074d24af18188524d9a45f8f524cba64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maze: {fileID: 1092382089}
+--- !u!195 &665578347
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 665578340}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1
+  m_BaseOffset: 0.5
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &1092382089 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6894345123690318299, guid: 5545fb63bcc0a3f44914d64c8619cc69,
+    type: 3}
+  m_PrefabInstance: {fileID: 1626720963274949364}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 428931f19059b324190d238544b3ce11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1381963086
 GameObject:
   m_ObjectHideFlags: 0
@@ -394,7 +447,8 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 5022602860645237092, guid: 8977be4d671ef89488eb674c367fd562,
+        type: 3}
     - target: {fileID: 1626720963292083857, guid: 5545fb63bcc0a3f44914d64c8619cc69,
         type: 3}
       propertyPath: m_InferenceDevice
@@ -403,22 +457,27 @@ PrefabInstance:
     - target: {fileID: 1626720963292083857, guid: 5545fb63bcc0a3f44914d64c8619cc69,
         type: 3}
       propertyPath: m_BrainParameters.VectorActionSpaceType
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1626720963292083857, guid: 5545fb63bcc0a3f44914d64c8619cc69,
         type: 3}
       propertyPath: m_BrainParameters.VectorActionSize.Array.data[0]
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1626720963292083857, guid: 5545fb63bcc0a3f44914d64c8619cc69,
         type: 3}
       propertyPath: m_BrainParameters.VectorObservationSize
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 4041139231125488268, guid: 5545fb63bcc0a3f44914d64c8619cc69,
+        type: 3}
+      propertyPath: m_LayerMask.m_Bits
+      value: 7223
+      objectReference: {fileID: 0}
     - target: {fileID: 6894345123690318299, guid: 5545fb63bcc0a3f44914d64c8619cc69,
         type: 3}
       propertyPath: mazeSize
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5545fb63bcc0a3f44914d64c8619cc69, type: 3}

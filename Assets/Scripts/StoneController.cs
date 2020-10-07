@@ -18,6 +18,7 @@ namespace Perdita
             if (collision.gameObject.tag == "Ground")
             {
                 GameController.instance.SetDistraction(transform.position);
+                audioSource.volume = GameController.instance.volume;
                 audioSource.PlayOneShot(stoneSounds[Random.Range(0, stoneSounds.Length)]);
             }
         }

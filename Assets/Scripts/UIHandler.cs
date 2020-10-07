@@ -18,6 +18,8 @@ namespace Perdita
 
         public Text timer;
 
+        public GameObject pausePanel;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -74,6 +76,11 @@ namespace Perdita
             else timeElapsed += seconds;
 
             timer.text = timeElapsed;
+        }
+
+        public void Pause(bool isPaused)
+        {
+            pausePanel.SetActive(isPaused);
         }
     }
 }

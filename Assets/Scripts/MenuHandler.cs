@@ -2,9 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MenuHandler : MonoBehaviour
 {
+    delegate void back();
+    back backFunction;
+
+    public Slider brightnessSlider, volumeSlider;
+
+    public GameObject menuPanel, optionsPanel;
+
+    public AudioSource musicSource;
+
+    private void Awake()
+    {
+        float gamma = PlayerPrefs.GetFloat("brightness", 0);
+        RenderSettings.ambientLight = new Color(gamma, gamma, gamma, 1);
+        brightnessSlider.value = gamma;
+
+    }
     public void OnClickStart()
     {
         SceneManager.LoadScene("Game");
@@ -14,15 +31,34 @@ public class MenuHandler : MonoBehaviour
     {
         Application.Quit();
     }
-    // Start is called before the first frame update
-    void Start()
+
+    public void OnClickOptions()
     {
-        
+        menuPanel.SetActive(false);
+        optionsPanel.SetActive(true);
+        backFunction = () => {
+            menuPanel.SetActive(true);
+            optionsPanel.SetActive(false);
+        };
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnClickBack()
     {
-        
+        backFunction();
+    }
+
+    public void OnChangeBrightness()
+    {
+        float gamma = brightnessSlider.value;
+        PlayerPrefs.SetFloat("brightness", gamma);
+        RenderSettings.ambientLight = new Color(gamma, gamma, gamma, 1);
+        Debug.Log(gamma);
+    }
+
+    public void OnChangeVolume()
+    {
+        float volume = volumeSlider.value;
+        PlayerPrefs.SetFloat("volume", volume);
+        musicSource.volume = volume;
     }
 }

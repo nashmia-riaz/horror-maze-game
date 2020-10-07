@@ -30,32 +30,37 @@ namespace Perdita
             transform.rotation = Quaternion.Euler(new Vector3(0f, Random.Range(0, 360)));
 
             transform.position = new Vector3(mazeGenerator.cells[0, 0].posX, 1.5f, mazeGenerator.cells[0, 0].posY);
-            target.transform.position = new Vector3(mazeGenerator.cells[1, 1].posX, 1.1f, mazeGenerator.cells[1, 1].posY);
-            //target.transform.localPosition = new Vector3(Random.Range(-10, 10), 0.5f, Random.Range(-10, 10));
+            Vector2 chosenCell = new Vector2(Random.Range(0, 2), Random.Range(0, 2));
+            while(chosenCell == new Vector2(0, 0))
+            {
+                chosenCell = new Vector2(Random.Range(0, 2), Random.Range(0, 2));
+            }
+            target.transform.position = new Vector3(mazeGenerator.cells[(int) chosenCell.x, (int) chosenCell.y].posX, 0.0f, mazeGenerator.cells[(int)chosenCell.x, (int)chosenCell.y].posY);
         }
 
         public override void CollectObservations(VectorSensor sensor)
         {
-            //sensor.AddObservation(transform.InverseTransformDirection(m_AgentRb.velocity));
+            sensor.AddObservation(transform.InverseTransformDirection(m_AgentRb.velocity));
             sensor.AddObservation(target.transform.localPosition);
             sensor.AddObservation(this.transform.localPosition);
-            sensor.AddObservation(m_AgentRb.velocity.x);
-            sensor.AddObservation(m_AgentRb.velocity.z);
+            //sensor.AddObservation(m_AgentRb.velocity.x);
+            //sensor.AddObservation(m_AgentRb.velocity.z);
         }
-        //public override void OnActionReceived(ActionBuffers actionBuffers)
-        //{
-        //    AddReward(-0.001f);
-        //    MoveAgent(actionBuffers.DiscreteActions);
-        //}
 
-        public float forceMultiplier = 20;
-        public override void OnActionReceived(float[] vectorAction)
+        public override void OnActionReceived(ActionBuffers actionBuffers)
         {
-            Vector3 controlSignal = Vector3.zero;
-            controlSignal.x = vectorAction[0];
-            controlSignal.z = vectorAction[1];
-            m_AgentRb.AddForce(controlSignal * forceMultiplier);
+            AddReward(-0.001f);
+            MoveAgent(actionBuffers.DiscreteActions);
         }
+
+        //public float forceMultiplier = 20;
+        //public override void OnActionReceived(float[] vectorAction)
+        //{
+        //    Vector3 controlSignal = Vector3.zero;
+        //    controlSignal.x = vectorAction[0];
+        //    controlSignal.z = vectorAction[1];
+        //    m_AgentRb.AddForce(controlSignal * forceMultiplier);
+        //}
 
         public void MoveAgent(ActionSegment<int> act)
         {
@@ -92,42 +97,42 @@ namespace Perdita
             }
             else if (collision.gameObject.CompareTag("Wall"))
             {
-                SetReward(-1.0f);
+                AddReward(-0.01f);
                 Debug.Log("Restarting episode: AI ran into a wall");
-                EndEpisode();
+                //EndEpisode();
             }
         }
 
-        //public override void Heuristic(in ActionBuffers actionsOut)
-        //{
-        //    var discreteActionsOut = actionsOut.DiscreteActions;
-        //    discreteActionsOut[0] = 0;
-        //    if (Input.GetKey(KeyCode.D))
-        //    {
-        //        Debug.Log("Pressed D");
-        //        discreteActionsOut[0] = 3;
-        //    }
-        //    else if (Input.GetKey(KeyCode.W))
-        //    {
-        //        Debug.Log("Pressed D");
-        //        discreteActionsOut[0] = 1;
-        //    }
-        //    else if (Input.GetKey(KeyCode.A))
-        //    {
-        //        Debug.Log("Pressed D");
-        //        discreteActionsOut[0] = 4;
-        //    }
-        //    else if (Input.GetKey(KeyCode.S))
-        //    {
-        //        Debug.Log("Pressed D");
-        //        discreteActionsOut[0] = 2;
-        //    }
-        //}
-
-        public override void Heuristic(float[] actionsOut)
+        public override void Heuristic(in ActionBuffers actionsOut)
         {
-            actionsOut[0] = Input.GetAxis("Horizontal");
-            actionsOut[1] = Input.GetAxis("Vertical");
+            var discreteActionsOut = actionsOut.DiscreteActions;
+            discreteActionsOut[0] = 0;
+            if (Input.GetKey(KeyCode.D))
+            {
+                Debug.Log("Pressed D");
+                discreteActionsOut[0] = 3;
+            }
+            else if (Input.GetKey(KeyCode.W))
+            {
+                Debug.Log("Pressed D");
+                discreteActionsOut[0] = 1;
+            }
+            else if (Input.GetKey(KeyCode.A))
+            {
+                Debug.Log("Pressed D");
+                discreteActionsOut[0] = 4;
+            }
+            else if (Input.GetKey(KeyCode.S))
+            {
+                Debug.Log("Pressed D");
+                discreteActionsOut[0] = 2;
+            }
         }
+
+        //public override void Heuristic(float[] actionsOut)
+        //{
+        //    actionsOut[0] = Input.GetAxis("Horizontal");
+        //    actionsOut[1] = Input.GetAxis("Vertical");
+        //}
     }
 }

@@ -18,6 +18,7 @@ namespace Perdita
         public GameObject mapCamera;
 
         bool hasGameStarted, hasGameEnded;
+        public bool isPaused;
 
         public GameObject flashLight;
         public Animator flashLightAnimator;
@@ -40,6 +41,9 @@ namespace Perdita
 
         float gameTimer;
 
+        public AudioSource musicSource, sfxSource;
+        public float volume;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -58,6 +62,10 @@ namespace Perdita
 
             hasGameStarted = true;
             hasGameEnded = false;
+
+            volume = PlayerPrefs.GetFloat("volume", 1);
+
+            sfxSource.volume = musicSource.volume = volume;
         }
 
         public void Initialize(Vector3 startPoint)
@@ -70,7 +78,7 @@ namespace Perdita
             mapCamera.GetComponent<Camera>().orthographicSize = size * 2 + 5;
 
             GameObject endPoint = Instantiate(endPointPrefab);
-            endPoint.transform.position = new Vector3(maze.cells[size-1, size-1].posX, 1.5f, maze.cells[size-1, size-1].posY);
+            endPoint.transform.position = new Vector3(maze.cells[size - 1, size - 1].posX, 1.5f, maze.cells[size - 1, size - 1].posY);
         }
 
         public void ChargeBattery(float charge)
@@ -127,6 +135,25 @@ namespace Perdita
                 }
                 flashLightAnimator.SetFloat("BatteryPower", batteryPower);
                 uihandler.UpdateBattery(batteryPower / batteryFull);
+            }
+
+            if (!isPaused)
+            {
+                if (Input.GetKeyDown(KeyCode.P))
+                {
+                    isPaused = true;
+                    uihandler.Pause(isPaused);
+                    Time.timeScale = 0;
+                }
+            }
+            else
+            {
+                if (Input.anyKeyDown)
+                {
+                    isPaused = false;
+                    uihandler.Pause(isPaused);
+                    Time.timeScale = 1;
+                }
             }
 
             AI.destination = player.transform.position;

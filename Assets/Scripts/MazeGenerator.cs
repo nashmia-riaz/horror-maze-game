@@ -28,12 +28,12 @@ namespace Perdita
         public GameObject EndPoint;
 
         bool isMazeInitialized;
-        public bool initializeMaze;
+        public bool shouldInitializeMaze;
 
         // Start is called before the first frame update
         void Start()
         {
-            if (!initializeMaze) return;
+            if (!shouldInitializeMaze) return;
 
             isMazeInitialized = false;
             InitializeMaze();
