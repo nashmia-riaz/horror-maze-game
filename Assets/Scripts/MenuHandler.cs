@@ -20,6 +20,8 @@ public class MenuHandler : MonoBehaviour
         float gamma = PlayerPrefs.GetFloat("brightness", 0);
         RenderSettings.ambientLight = new Color(gamma, gamma, gamma, 1);
         brightnessSlider.value = gamma;
+        float volume = PlayerPrefs.GetFloat("volume", 1);
+        volumeSlider.value = volume;
 
     }
     public void OnClickStart()

@@ -80,10 +80,10 @@ namespace Perdita
             {
                 GameObject obj;
 
-                //if (Random.value < 0.9f)
-                obj = Instantiate(wallPrefab, this.transform);
-                //else
-                //    obj = Instantiate(wallLitPrefab, this.transform);
+                if (Random.value < 0.5f)
+                    obj = Instantiate(wallPrefab, this.transform);
+                else
+                    obj = Instantiate(wallLitPrefab, this.transform);
 
                 obj.transform.position = new Vector3(posX + tileSize / 2f, 1.5f, posY);
                 obj.transform.localEulerAngles = new Vector3(0, 180, 0);

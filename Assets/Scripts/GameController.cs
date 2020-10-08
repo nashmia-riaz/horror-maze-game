@@ -85,7 +85,7 @@ namespace Perdita
         void SpawnEnemy()
         {
             enemyObject = Instantiate(enemyPrefab);
-            enemyObject.transform.position = new Vector3(maze.cells[0, 0].posX, 1.0f, maze.cells[0, 0].posY);
+            enemyObject.transform.position = new Vector3(maze.cells[maze.mazeSize/2, maze.mazeSize/2].posX, 1.0f, maze.cells[maze.mazeSize / 2, maze.mazeSize/2].posY);
             AI = enemyObject.GetComponent<AIController>();
             AI.player = player;
         }
@@ -141,8 +141,14 @@ namespace Perdita
         // Update is called once per frame
         void Update()
         {
-            if (!hasGameStarted || hasGameEnded) return;
-
+            if (!hasGameStarted) return;
+            if (hasGameEnded)
+            {
+                if (Input.anyKeyDown)
+                {
+                    SceneManager.LoadScene("Menu");
+                }
+            }
             gameTimer += Time.deltaTime;
             uihandler.UpdateTimer(gameTimer);
 
@@ -200,7 +206,16 @@ namespace Perdita
             PlayerPrefs.SetInt("MazeSize", mazeSize++);
             hasGameEnded = true;
             Debug.Log("Player reached the end");
-            SceneManager.LoadScene("Menu");
+            //SceneManager.LoadScene("Menu");
+            uihandler.Win();
+            Time.timeScale = 0;
+        }
+
+        public void GameOver()
+        {
+            hasGameEnded = true;
+            uihandler.GameOver();
+            Time.timeScale = 0;
         }
 
         public void AttackPlayer()

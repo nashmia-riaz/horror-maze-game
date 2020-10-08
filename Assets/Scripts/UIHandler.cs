@@ -18,13 +18,7 @@ namespace Perdita
 
         public Text timer;
 
-        public GameObject pausePanel;
-
-        // Start is called before the first frame update
-        void Start()
-        {
-
-        }
+        public GameObject pausePanel, gameOverPanel, winPanel;
 
         public void UpdateBattery(float fill)
         {
@@ -81,6 +75,16 @@ namespace Perdita
         public void Pause(bool isPaused)
         {
             pausePanel.SetActive(isPaused);
+        }
+
+        public void GameOver()
+        {
+            gameOverPanel.SetActive(true);
+        }
+
+        public void Win()
+        {
+            winPanel.SetActive(true);
         }
     }
 }
