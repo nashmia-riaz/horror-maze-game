@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// This scripts handles all the UI and its corresponding event functions in the game scene.
+/// </summary>
 namespace Perdita
 {
     public class UIHandler : MonoBehaviour

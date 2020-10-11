@@ -63,7 +63,7 @@ namespace Perdita
 
         public void Chase(Vector3 newDestination)
         {
-            Debug.Log("AI is chasing");
+            destination = newDestination;
             StopAllCoroutines();
             agent.SetDestination(destination);
 
@@ -113,7 +113,7 @@ namespace Perdita
         void Update()
         {
             //if AI is patrolling and has not reached target, keep going for the target
-            if((state == AIState.Patrol || state == AIState.Chase) && !isCollidingWithPlayer)
+            if((state == AIState.Patrol) && !isCollidingWithPlayer)
             {
                 agent.SetDestination(destination);
             }
@@ -160,7 +160,7 @@ namespace Perdita
                     StartCoroutine(WaitIdle(5f, EndDistraction));
                 }
             }
-            else if (other.gameObject.tag == "Player" && !isCollidingWithPlayer)
+            else if (other.gameObject.tag == "Player" && state != AIState.Distract && !isCollidingWithPlayer)
             {
                 isCollidingWithPlayer = true;
                 Attack();
@@ -170,7 +170,7 @@ namespace Perdita
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.gameObject.tag == "Player" && isCollidingWithPlayer)
+            if (other.gameObject.tag == "Player" && isCollidingWithPlayer && state == AIState.Attack)
             {
                 isCollidingWithPlayer = false;
                 animator.SetTrigger("EndAttack");
@@ -183,10 +183,6 @@ namespace Perdita
             if (isCollidingWithPlayer) return;
             if (state != AIState.Patrol) return;
             agent.SetDestination(point);
-        }
-
-        private void OnCollisionEnter(Collision collision)
-        {
         }
     }
 }

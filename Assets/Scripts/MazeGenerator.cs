@@ -4,10 +4,14 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
+/// <summary>
+/// Generates a maze using Hunt-and-Kill algorithm.
+/// </summary>
 namespace Perdita
 {
     public class MazeGenerator : MonoBehaviour
     {
+        #region variables
         public NavMeshSurface navMesh;
         int rowCount, colCount;
 
@@ -29,6 +33,7 @@ namespace Perdita
 
         bool isMazeInitialized;
         public bool shouldInitializeMaze;
+        #endregion
 
         // Start is called before the first frame update
         void Start()
@@ -39,6 +44,9 @@ namespace Perdita
             InitializeMaze();
         }
 
+        /// <summary>
+        /// Destroys the maze currently generated.
+        /// </summary>
         void DestroyMaze()
         {
             if (!isMazeInitialized) return;
@@ -54,11 +62,20 @@ namespace Perdita
             isMazeInitialized = false;
         }
 
+        /// <summary>
+        /// Destroys and creates a new maze. Used mainly in AI training for each episode.
+        /// </summary>
         public void ResetMaze()
         {
             DestroyMaze();
             InitializeMaze();
         }
+        
+
+        /// <summary>
+        /// Initialises the maze as a grid with all walls present.
+        /// Then applies Hunt-and-Kill to carve and create paths.
+        /// </summary>
         public void InitializeMaze()
         {
             if (mazeSize == 0)
@@ -98,6 +115,8 @@ namespace Perdita
 
             HuntAndKill();
             RenderMaze();
+
+            //generates navmesh surfaces at runtime
             navMesh.BuildNavMesh();
 
             if (gameController != null)
@@ -106,6 +125,9 @@ namespace Perdita
             isMazeInitialized = true;
         }
 
+        /// <summary>
+        /// Renders the maze and creates its walls
+        /// </summary>
         public void RenderMaze()
         {
             for (int i = 0; i < rowCount; i++)
@@ -118,6 +140,10 @@ namespace Perdita
             }
 
         }
+
+        /// <summary>
+        /// applies Hunt-and-Kill until no more paths are creatable.
+        /// </summary>
         public void HuntAndKill()
         {
             while (!courseComplete)
@@ -128,6 +154,10 @@ namespace Perdita
         }
 
         #region hunt
+        /// <summary>
+        /// Hunts to find a cell who's neighbor was previously visited and sets it as current cell.
+        /// Connects it with previously visited neighbor by destroying adjacent wall.
+        /// </summary>
         public void Hunt()
         {
             courseComplete = true;
@@ -208,6 +238,9 @@ namespace Perdita
         #endregion
 
         #region kill
+        /// <summary>
+        /// Chooses a random direction to go to from current cell and visits that cell.
+        /// </summary>
         public void Kill()
         {
             while (RouteStillAvailable(currentRow, currentCol))
@@ -253,6 +286,12 @@ namespace Perdita
             }
         }
 
+        /// <summary>
+        /// Checks to see if a route is available to the cell specified.
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="col"></param>
+        /// <returns></returns>
         bool RouteStillAvailable(int row, int col)
         {
             if (cells[row, col].hasBeenVisited) return false;
@@ -281,11 +320,5 @@ namespace Perdita
         }
 
         #endregion
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
     }
 }

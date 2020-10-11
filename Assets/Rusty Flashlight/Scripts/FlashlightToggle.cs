@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.GlobalIllumination;
 
+/// <summary>
+/// Holds flashlight info and toggles it on or off
+/// </summary>
 public class FlashlightToggle : MonoBehaviour
 {
     public GameObject lightGO; //light gameObject to work with

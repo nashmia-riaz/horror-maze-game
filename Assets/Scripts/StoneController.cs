@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Script for rock. Mainly exists to play sound of rock hitting the floor in 3D space.
+/// </summary>
 namespace Perdita
 {
     public class StoneController : MonoBehaviour

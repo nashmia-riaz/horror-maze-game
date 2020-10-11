@@ -7,23 +7,20 @@ using Unity.MLAgents.Actuators;
 
 namespace Perdita
 {
-    public class AIAgent : Agent
+    public class AIAgent5 : Agent
     {
         public MazeGenerator mazeGenerator;
         Rigidbody m_AgentRb;
         public GameObject target;
         Vector3 startingPosition;
 
+        // Start is called before the first frame update
         void Start()
         {
             m_AgentRb = GetComponent<Rigidbody>();
             startingPosition = transform.position;
         }
 
-        /// <summary>
-        /// called whenever an episode begins. Here, the positions and velocities are reset. 
-        /// target is spawned at a random location in the maze 
-        /// </summary>
         public override void OnEpisodeBegin()
         {
             mazeGenerator.ResetMaze();
@@ -41,31 +38,30 @@ namespace Perdita
             target.transform.position = new Vector3(mazeGenerator.cells[(int) chosenCell.x, (int) chosenCell.y].posX, 0.0f, mazeGenerator.cells[(int)chosenCell.x, (int)chosenCell.y].posY);
         }
 
-        /// <summary>
-        /// Observation data is collected in this function. The agent will act based on the data it recieves.
-        /// </summary>
-        /// <param name="sensor"></param>
         public override void CollectObservations(VectorSensor sensor)
         {
             sensor.AddObservation(transform.InverseTransformDirection(m_AgentRb.velocity));
             sensor.AddObservation(target.transform.localPosition);
             sensor.AddObservation(this.transform.localPosition);
+            //sensor.AddObservation(m_AgentRb.velocity.x);
+            //sensor.AddObservation(m_AgentRb.velocity.z);
         }
 
-        /// <summary>
-        /// The action agent
-        /// </summary>
-        /// <param name="actionBuffers"></param>
         public override void OnActionReceived(ActionBuffers actionBuffers)
         {
             AddReward(-0.001f);
             MoveAgent(actionBuffers.DiscreteActions);
         }
 
-        /// <summary>
-        /// function that maps action segment into a movement action on AI
-        /// </summary>
-        /// <param name="act"></param>
+        //public float forceMultiplier = 20;
+        //public override void OnActionReceived(float[] vectorAction)
+        //{
+        //    Vector3 controlSignal = Vector3.zero;
+        //    controlSignal.x = vectorAction[0];
+        //    controlSignal.z = vectorAction[1];
+        //    m_AgentRb.AddForce(controlSignal * forceMultiplier);
+        //}
+
         public void MoveAgent(ActionSegment<int> act)
         {
             var dirToGo = Vector3.zero;
@@ -91,11 +87,6 @@ namespace Perdita
             m_AgentRb.AddForce(dirToGo * 0.5f, ForceMode.VelocityChange);
         }
 
-        /// <summary>
-        /// Collision detection. If reaches target, reward and restart episode. 
-        /// if collides with wall, deduct from max reward
-        /// </summary>
-        /// <param name="collision"></param>
         private void OnCollisionEnter(Collision collision)
         {
             if (collision.gameObject.CompareTag("Player"))
@@ -107,6 +98,8 @@ namespace Perdita
             else if (collision.gameObject.CompareTag("Wall"))
             {
                 AddReward(-0.01f);
+                Debug.Log("Restarting episode: AI ran into a wall");
+                //EndEpisode();
             }
         }
 
@@ -135,5 +128,11 @@ namespace Perdita
                 discreteActionsOut[0] = 2;
             }
         }
+
+        //public override void Heuristic(float[] actionsOut)
+        //{
+        //    actionsOut[0] = Input.GetAxis("Horizontal");
+        //    actionsOut[1] = Input.GetAxis("Vertical");
+        //}
     }
 }

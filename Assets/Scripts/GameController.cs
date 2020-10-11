@@ -4,10 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Manages the game, player and AI during the game scene.
+/// </summary>
 namespace Perdita
 {
     public class GameController : MonoBehaviour
     {
+        #region variables
         public static GameController instance;
         public MazeGenerator maze;
         public UIHandler uihandler;
@@ -37,7 +41,7 @@ namespace Perdita
 
         public GameObject rockPrefab;
 
-        public GameObject distraction;
+        //public GameObject distraction;
 
         public GameObject endPointPrefab;
 
@@ -45,6 +49,7 @@ namespace Perdita
 
         public AudioSource musicSource, sfxSource;
         public float volume;
+        #endregion
 
         // Start is called before the first frame update
         void Start()
@@ -58,7 +63,7 @@ namespace Perdita
 
             soundEffectsSource = GameObject.FindGameObjectWithTag("Sound Effects Source").GetComponent<SoundEffectsManager>();
 
-            distraction = GameObject.FindGameObjectWithTag("Distraction");
+            //distraction = GameObject.FindGameObjectWithTag("Distraction");
 
             gameTimer = 0;
 
@@ -69,9 +74,15 @@ namespace Perdita
 
             sfxSource.volume = musicSource.volume = volume;
 
+            //spawn enemy after 3 seconds
             StartCoroutine(WaitBeforeEnemySpawn(3));
         }
 
+        /// <summary>
+        /// coroutine to wait at the start of the scene before spawning the enemy
+        /// </summary>
+        /// <param name="seconds"></param>
+        /// <returns></returns>
         IEnumerator WaitBeforeEnemySpawn(float seconds)
         {
             while (seconds > 0)
@@ -82,6 +93,9 @@ namespace Perdita
             SpawnEnemy();
         }
 
+        /// <summary>
+        /// Spawn the enemy object
+        /// </summary>
         void SpawnEnemy()
         {
             enemyObject = Instantiate(enemyPrefab);
@@ -89,6 +103,11 @@ namespace Perdita
             AI = enemyObject.GetComponent<AIController>();
             AI.player = player;
         }
+
+        /// <summary>
+        /// Initialises the game scene
+        /// </summary>
+        /// <param name="startPoint"></param>
         public void Initialize(Vector3 startPoint)
         {
             player.transform.position = new Vector3(maze.cells[0, 0].posX, 100, maze.cells[0, 0].posY);
@@ -97,11 +116,12 @@ namespace Perdita
             Debug.Log("Setting camera position to " + mapCamera.transform.position);
 
             mapCamera.GetComponent<Camera>().orthographicSize = size * 2 + 5;
-
-            GameObject endPoint = Instantiate(endPointPrefab);
-            endPoint.transform.position = new Vector3(maze.cells[size - 1, size - 1].posX, 1.5f, maze.cells[size - 1, size - 1].posY);
         }
 
+        /// <summary>
+        /// Recharges the battery. Plays the sound.
+        /// </summary>
+        /// <param name="charge"></param>
         public void ChargeBattery(float charge)
         {
             batteryPower += charge;
@@ -113,13 +133,14 @@ namespace Perdita
             flashLightAnimator.SetFloat("BatteryPower", batteryPower);
             soundEffectsSource.PlaySound("Flashlight Rev");
 
-            //AI.ChangeState(AIController.AIState.Chase, 4f);
-            //AI.destination = player.transform.position;
             AI.Chase(player.transform.position);
 
             SetDistraction(player.transform.position);
         }
 
+        /// <summary>
+        /// Toggles battery on or off. Plays the sound.
+        /// </summary>
         public void ToggleBattery()
         {
             if (batteryPower <= 0) return;
@@ -128,7 +149,10 @@ namespace Perdita
             flashLight.SetActive(isBatteryOn);
             soundEffectsSource.PlaySound("Flashlight Click");
         }
-        //public GameObject rock;
+
+        /// <summary>
+        /// Instantiates and throws a rock
+        /// </summary>
         public void ThrowRock()
         {
             GameObject rock = Instantiate(rockPrefab);
@@ -141,17 +165,24 @@ namespace Perdita
         // Update is called once per frame
         void Update()
         {
+            //if the game has not started, return and don't do anything
             if (!hasGameStarted) return;
+
+            //if the game ended and a key is pressed, go to menu
             if (hasGameEnded)
             {
                 if (Input.anyKeyDown)
                 {
                     SceneManager.LoadScene("Menu");
                 }
+                return;
             }
+
+            //increment game timer
             gameTimer += Time.deltaTime;
             uihandler.UpdateTimer(gameTimer);
 
+            //deplete the battery for flashlight as time goes on
             if (isBatteryOn)
             {
                 batteryPower -= Time.deltaTime * batteryDecreaseSpeed;
@@ -165,6 +196,8 @@ namespace Perdita
                 uihandler.UpdateBattery(batteryPower / batteryFull);
             }
 
+            //if game is paused, press any key to unpause. 
+            //if game is not paused, press p to pause
             if (!isPaused)
             {
                 if (Input.GetKeyDown(KeyCode.P))
@@ -185,32 +218,44 @@ namespace Perdita
             }
         }
 
+        /// <summary>
+        /// called when player collides with floor to send destination on navmesh to AI
+        /// </summary>
+        /// <param name="pos"></param>
         public void PlayerCollidedWithFloor(Vector3 pos)
         {
             if (AI != null)
                 AI.destination = pos;
-            Debug.Log(pos);
         }
 
+        /// <summary>
+        /// Every time a rock is thrown, the single distraction object in game is activated and set to that position. 
+        /// Distraction is a singleton. The AI can only be distracted by one distraction in the game
+        /// </summary>
+        /// <param name="pos"></param>
         public void SetDistraction(Vector3 pos)
         {
-            distraction.GetComponent<DistractionScript>().Activate(pos);
+            DistractionScript.instance.Activate(pos);
             if(AI != null)
                 AI.Chase(pos);
         }
 
+        /// <summary>
+        /// Called when the game ends i.e. when player wins. shows the end screen.
+        /// </summary>
         public void EndGame()
         {
             if (hasGameEnded) return;
             int mazeSize = PlayerPrefs.GetInt("MazeSize", 6);
             PlayerPrefs.SetInt("MazeSize", mazeSize++);
             hasGameEnded = true;
-            Debug.Log("Player reached the end");
-            //SceneManager.LoadScene("Menu");
             uihandler.Win();
             Time.timeScale = 0;
         }
 
+        /// <summary>
+        /// Called when game is over i.e. when player dies. Shows game over screen.
+        /// </summary>
         public void GameOver()
         {
             hasGameEnded = true;
@@ -218,9 +263,11 @@ namespace Perdita
             Time.timeScale = 0;
         }
 
+        /// <summary>
+        /// Called when AI attacks player. Does damage to player
+        /// </summary>
         public void AttackPlayer()
         {
-            Debug.Log("Attack player");
             playerController.DoDamage(5);
             if (playerController.health <= 0) return;
             uihandler.RedFlash();

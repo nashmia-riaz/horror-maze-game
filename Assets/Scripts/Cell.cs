@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// function for each of the cell object. 
+/// Holds its positions and walls informations.
+/// Also generates walls as lit or unlit prefabs randomly.
+/// </summary>
 namespace Perdita
 {
     public class Cell : MonoBehaviour
@@ -21,12 +26,6 @@ namespace Perdita
             hasBeenVisited = false;
             hasNorthWall = hasSouthWall = hasEastWall = hasWestWall = true;
             posX = posY = 0;
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
         }
 
         public void SetPosition(float x, float y)
@@ -52,10 +51,10 @@ namespace Perdita
             {
                 GameObject obj;
 
-                //if (Random.value < 0.9f)
+                if (Random.value < 0.9f)
                 obj = Instantiate(wallPrefab, this.transform);
-                //else
-                //    obj = Instantiate(wallLitPrefab, this.transform);
+                else
+                    obj = Instantiate(wallLitPrefab, this.transform);
 
                 obj.transform.position = new Vector3(posX, 1.5f, posY + tileSize / 2f);
                 obj.name = "North Wall";
@@ -66,10 +65,10 @@ namespace Perdita
             {
                 GameObject obj;
 
-                //if (Random.value < 0.9f)
+                if (Random.value < 0.9f)
                 obj = Instantiate(wallPrefab, this.transform);
-                //else
-                //    obj = Instantiate(wallLitPrefab, this.transform);
+               else
+                    obj = Instantiate(wallLitPrefab, this.transform);
 
                 obj.transform.position = new Vector3(posX, 1.5f, posY - tileSize / 2f);
                 obj.transform.localEulerAngles = new Vector3(0, -90, 0);
@@ -80,7 +79,7 @@ namespace Perdita
             {
                 GameObject obj;
 
-                if (Random.value < 0.5f)
+                if (Random.value < 0.9f)
                     obj = Instantiate(wallPrefab, this.transform);
                 else
                     obj = Instantiate(wallLitPrefab, this.transform);
@@ -94,10 +93,10 @@ namespace Perdita
             {
                 GameObject obj;
 
-                //if (Random.value < 0.9f)
+                if (Random.value < 0.9f)
                 obj = Instantiate(wallPrefab, this.transform);
-                //else
-                //    obj = Instantiate(wallLitPrefab, this.transform);
+                else
+                    obj = Instantiate(wallLitPrefab, this.transform);
 
                 obj.transform.position = new Vector3(posX - tileSize / 2f, 1.5f, posY);
                 obj.transform.localEulerAngles = new Vector3(0, 0, 0);

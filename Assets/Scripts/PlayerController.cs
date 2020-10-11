@@ -2,17 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This script handles further input from player and manages their variables such as health.
+/// </summary>
 namespace Perdita
 {
     public class PlayerController : MonoBehaviour
     {
         public float health;
-
-        // Start is called before the first frame update
-        void Start()
-        {
-
-        }
 
         // Update is called once per frame
         void Update()
@@ -27,7 +24,6 @@ namespace Perdita
             }
             else if (Input.GetMouseButtonDown(0))
             {
-                Debug.Log("Throwing a rock");
                 GameController.instance.ThrowRock();
             }
         }

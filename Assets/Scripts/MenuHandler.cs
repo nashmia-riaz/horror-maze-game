@@ -4,6 +4,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/// <summary>
+/// This script takes care of all the UI events in main menu.
+/// It contains functions for each of the button clicks.
+/// </summary>
 public class MenuHandler : MonoBehaviour
 {
     delegate void back();
