@@ -21,6 +21,9 @@ public class MenuHandler : MonoBehaviour
 
     private void Awake()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        Time.timeScale = 1;
         float gamma = PlayerPrefs.GetFloat("brightness", 0);
         RenderSettings.ambientLight = new Color(gamma, gamma, gamma, 1);
         brightnessSlider.value = gamma;

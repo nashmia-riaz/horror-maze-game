@@ -19,6 +19,7 @@ namespace Perdita
         AIState state;
         NavMeshAgent agent;
 
+        GameObject chaseObject;
         public GameObject player;
 
         bool isCollidingWithPlayer = false;
@@ -61,11 +62,11 @@ namespace Perdita
             agent.speed = speed;
         }
 
-        public void Chase(Vector3 newDestination)
+        public void Chase(GameObject obj)
         {
-            destination = newDestination;
+            chaseObject = obj;
             StopAllCoroutines();
-            agent.SetDestination(destination);
+            agent.SetDestination(chaseObject.transform.position);
 
             state = AIState.Chase;
             speed = 4f;
@@ -116,6 +117,9 @@ namespace Perdita
             if((state == AIState.Patrol) && !isCollidingWithPlayer)
             {
                 agent.SetDestination(destination);
+            }else if(state == AIState.Chase)
+            {
+                agent.SetDestination(chaseObject.transform.position);
             }
 
             if(state == AIState.Attack)
@@ -174,7 +178,8 @@ namespace Perdita
             {
                 isCollidingWithPlayer = false;
                 animator.SetTrigger("EndAttack");
-                Chase(player.transform.position);
+                //Chase(player.transform.position);
+                Patrol();
             }
         }
 

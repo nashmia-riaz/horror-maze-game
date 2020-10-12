@@ -2473,7 +2473,7 @@ MonoBehaviour:
   gameController: {fileID: 1451679378}
   mazeObject: {fileID: 1791358024}
   EndPoint: {fileID: 158804503}
-  shouldInitializeMaze: 1
+  shouldInitializeMaze: 0
 --- !u!4 &1791358024
 Transform:
   m_ObjectHideFlags: 0

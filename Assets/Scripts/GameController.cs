@@ -41,19 +41,29 @@ namespace Perdita
 
         public GameObject rockPrefab;
 
-        //public GameObject distraction;
-
         public GameObject endPointPrefab;
 
         float gameTimer;
 
         public AudioSource musicSource, sfxSource;
         public float volume;
+
+        int mazeSize;
         #endregion
 
         // Start is called before the first frame update
         void Start()
         {
+            mazeSize = PlayerPrefs.GetInt("MazeSize", 5);
+            maze.mazeSize = mazeSize;
+            maze.InitializeMaze();
+
+            mapCamera.GetComponent<Camera>().orthographicSize = mazeSize * 3;
+            Vector2 bottomLeft = new Vector2(maze.cells[0, 0].posX - maze.tileSize / 2, maze.cells[0, 0].posY - maze.tileSize / 2);
+            Vector2 topRight = new Vector2(maze.cells[mazeSize - 1, mazeSize-1].posX + maze.tileSize / 2, maze.cells[mazeSize - 1,mazeSize - 1].posY + maze.tileSize / 2);
+            Vector2 centerMaze = (topRight + bottomLeft) / 2;
+            mapCamera.transform.position = new Vector3(centerMaze.x, 100, centerMaze.y);
+
             isBatteryOn = true;
 
             if (instance == null)
@@ -62,8 +72,6 @@ namespace Perdita
                 Destroy(this.gameObject);
 
             soundEffectsSource = GameObject.FindGameObjectWithTag("Sound Effects Source").GetComponent<SoundEffectsManager>();
-
-            //distraction = GameObject.FindGameObjectWithTag("Distraction");
 
             gameTimer = 0;
 
@@ -133,9 +141,9 @@ namespace Perdita
             flashLightAnimator.SetFloat("BatteryPower", batteryPower);
             soundEffectsSource.PlaySound("Flashlight Rev");
 
-            AI.Chase(player.transform.position);
+            AI.Chase(player);
 
-            SetDistraction(player.transform.position);
+            //SetDistraction(player.transform.position);
         }
 
         /// <summary>
@@ -209,7 +217,11 @@ namespace Perdita
             }
             else
             {
-                if (Input.anyKeyDown)
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    SceneManager.LoadScene("Menu");
+                }
+                else if (Input.anyKeyDown)
                 {
                     isPaused = false;
                     uihandler.Pause(isPaused);
@@ -237,7 +249,7 @@ namespace Perdita
         {
             DistractionScript.instance.Activate(pos);
             if(AI != null)
-                AI.Chase(pos);
+                AI.Chase(DistractionScript.instance.gameObject);
         }
 
         /// <summary>
@@ -246,7 +258,7 @@ namespace Perdita
         public void EndGame()
         {
             if (hasGameEnded) return;
-            int mazeSize = PlayerPrefs.GetInt("MazeSize", 6);
+            int mazeSize = PlayerPrefs.GetInt("MazeSize", 5);
             PlayerPrefs.SetInt("MazeSize", mazeSize++);
             hasGameEnded = true;
             uihandler.Win();
